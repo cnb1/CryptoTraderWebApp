@@ -30,7 +30,8 @@ module.exports = {
 
             const newPortfolio = new UserPortfolio({
                 username,
-                strategy
+                strategy,
+                userId
             })
 
             const portfolio = await newPortfolio.save();
