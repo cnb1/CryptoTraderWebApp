@@ -7,18 +7,33 @@ type User {
     token: String!
     username: String!
     createdAt: String!
-    id2: ID!
+    userportfolio: ID
+}
+type Portfolio {
+    id: ID!
+    username: String!
+    strategy: String!
+    value: Int!
 }
 input RegisterInput {
     username: String!
     email: String!
     password: String!
     confirmPassword: String!
+    userportfolio: ID
+}
+input PortfolioInput {
+    userId: ID!
+    username: String!
+    strategy: String!
+    userportfolio: ID
 }
 type Query {
     getUsers: [User]
 }
 type Mutation {
     registerUser(registerInput: RegisterInput): User!
+    createUserPortfolio(userPortfolio: PortfolioInput): Portfolio!
+    addPortfolio(userId: ID!, portfolioId: ID!): String!
 }
 `;

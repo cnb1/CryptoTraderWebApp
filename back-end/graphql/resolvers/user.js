@@ -7,7 +7,6 @@ module.exports = {
                 registerInput: {username, email, password, confirmPassword}
             }
         ) {
-
             const user = await User.findOne({username});
 
             if (user) {
@@ -33,10 +32,20 @@ module.exports = {
                 id: res._id
             }
 
+        },
+        async addPortfolio(_, { userId, portfolioId }) {
+            console.log(userId);
+
+            await User.updateOne({_id: userId}, {
+                userportfolio:  portfolioId
+            })
+
+            return portfolioId
         }
     },
     Query: {
         async getUsers() {
+
             try{
                 const users = await User.find().sort({createdAt: -1});
                 return users;
