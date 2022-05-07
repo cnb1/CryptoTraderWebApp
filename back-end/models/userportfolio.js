@@ -7,7 +7,13 @@ const userPortfolioSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'users'
-    }
+    },
+    valueHistory: [
+        {
+            price: Number,
+            date: Date
+        }
+    ]
 });
 
 module.exports = model('userportfolio', userPortfolioSchema);

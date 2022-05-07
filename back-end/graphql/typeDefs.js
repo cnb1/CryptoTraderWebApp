@@ -9,11 +9,16 @@ type User {
     createdAt: String!
     userportfolio: ID
 }
+type Price {
+    price: Int!
+    date: String!
+}
 type Portfolio {
     id: ID!
     username: String!
     strategy: String!
     value: Int!
+    valueHistory: [Price]!
 }
 input RegisterInput {
     username: String!

@@ -26,12 +26,15 @@ module.exports = {
             //     console.log("username doesnt exist")
             // }
 
-            
 
             const newPortfolio = new UserPortfolio({
                 username,
                 strategy,
-                userId
+                userId,
+                valueHistory: {
+                    price: 0.0,
+                    date: new Date().toISOString()
+                }
             })
 
             const portfolio = await newPortfolio.save();
@@ -39,6 +42,7 @@ module.exports = {
             console.log(userId);
             console.log(portfolio.id);
 
+            // add the portfolio id to the user document
             userResolvers.Mutation.addPortfolio(_, {userId: userId, portfolioId: portfolio.id});
 
             return portfolio;
