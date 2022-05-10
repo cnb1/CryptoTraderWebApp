@@ -46,6 +46,23 @@ module.exports = {
             userResolvers.Mutation.addPortfolio(_, {userId: userId, portfolioId: portfolio.id});
 
             return portfolio;
+        },
+        async addPrice(_, {price, portfolioId}) {
+
+            const portfolio = await UserPortfolio.findById(portfolioId);
+
+            if (portfolio) {
+                portfolio.valueHistory.push({
+                    price,
+                    date: new Date().toISOString()
+                })
+
+                await portfolio.save();
+                return portfolio;
+            }
+            else {
+                throw new UserInputError('Portfolio not found')
+            }
         }
     }
 }

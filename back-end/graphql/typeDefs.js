@@ -40,5 +40,6 @@ type Mutation {
     registerUser(registerInput: RegisterInput): User!
     createUserPortfolio(userPortfolio: PortfolioInput): Portfolio!
     addPortfolio(userId: ID!, portfolioId: ID!): String!
+    addPrice(price: Float!, portfolioId: ID!): Portfolio!
 }
 `;

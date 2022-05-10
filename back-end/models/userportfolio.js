@@ -1,6 +1,6 @@
 const {model, Schema} = require('mongoose');
 
-const userPortfolioSchema = new Schema({
+const userPortfolio = new Schema({
     username: String,
     strategy: String,
     value: Number,
@@ -16,4 +16,4 @@ const userPortfolioSchema = new Schema({
     ]
 });
 
-module.exports = model('userportfolio', userPortfolioSchema);
+module.exports = model('userportfolio', userPortfolio);
