@@ -4,6 +4,7 @@ const userPortfolio = new Schema({
     username: String,
     strategy: String,
     value: Number,
+    createdAt: String,
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'users'

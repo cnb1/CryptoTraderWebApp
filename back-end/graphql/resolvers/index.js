@@ -3,7 +3,8 @@ const userPortfolio = require('./userportfolio');
 
 module.exports = {
     Query: {
-        ...userResolvers.Query
+        ...userResolvers.Query,
+        ...userPortfolio.Query
     },
     Mutation: {
         ...userResolvers.Mutation,

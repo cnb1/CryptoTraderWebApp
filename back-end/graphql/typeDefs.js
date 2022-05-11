@@ -10,7 +10,7 @@ type User {
     userportfolio: ID
 }
 type Price {
-    price: Int!
+    price: Float!
     date: String!
 }
 type Portfolio {
@@ -18,6 +18,7 @@ type Portfolio {
     username: String!
     strategy: String!
     value: Int!
+    createdAt: String!
     valueHistory: [Price]!
 }
 input RegisterInput {
@@ -35,6 +36,8 @@ input PortfolioInput {
 }
 type Query {
     getUsers: [User]
+    getPortfolios: [Portfolio]
+    getPortfolio(portfolioId: ID!): Portfolio
 }
 type Mutation {
     registerUser(registerInput: RegisterInput): User!

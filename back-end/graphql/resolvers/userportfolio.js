@@ -15,22 +15,12 @@ module.exports = {
             else {
                 console.log('portfolio id doesnt exitst')
             }
-            
-            // console.log(username);
-            // const por = await UserPortfolio.findOne({username});
-
-            // if (por) {
-            //     throw new UserInputError('Portfolio with username exists');
-            // }
-            // else {
-            //     console.log("username doesnt exist")
-            // }
-
 
             const newPortfolio = new UserPortfolio({
                 username,
                 strategy,
                 userId,
+                createdAt: new Date().toISOString(),
                 valueHistory: {
                     price: 0.0,
                     date: new Date().toISOString()
@@ -63,6 +53,31 @@ module.exports = {
             else {
                 throw new UserInputError('Portfolio not found')
             }
+        }
+    },
+    Query: {
+        async getPortfolios() {
+            console.log("in get portfolios");
+            try {
+                console.log("in get portfolios");
+                const portfolios = await UserPortfolio.find();
+                return portfolios;
+            }
+            catch (err) {
+                throw Error(err);
+            }
+        },
+        async getPortfolio(_, {portfolioId}) {
+
+            const portfolio = await UserPortfolio.findById(portfolioId);
+
+            if (portfolio) {
+                return portfolio;
+            }
+            else {
+                throw new UserInputError("Portfolio doesnt exitst");
+            }
+
         }
     }
 }
