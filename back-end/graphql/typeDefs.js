@@ -10,6 +10,7 @@ type User {
     userportfolio: ID
 }
 type Price {
+    id: ID!
     price: Float!
     date: String!
 }
