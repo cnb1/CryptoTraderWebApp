@@ -10,7 +10,7 @@ function App() {
 
   const {
     loading,
-    error,
+    error, 
     data
   } = useQuery(FETCH_PORTFOLIO, {
     variables: { portfolioId },
