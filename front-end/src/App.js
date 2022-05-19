@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/client';
 
 function App() {
 
-  const portfolioId = "627b2904540cad842811ad42";
+  const portfolioId = "627b2904540cad842811ad42"; 
 
   const {
     loading,
