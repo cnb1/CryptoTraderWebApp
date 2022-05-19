@@ -57,7 +57,6 @@ module.exports = {
     },
     Query: {
         async getPortfolios() {
-            console.log("in get portfolios");
             try {
                 console.log("in get portfolios");
                 const portfolios = await UserPortfolio.find();
