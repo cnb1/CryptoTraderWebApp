@@ -12,9 +12,7 @@ module.exports = {
             if (userportfolio) {
                 throw new UserInputError('Portfolio exists');
             }
-            else {
-                console.log('portfolio id doesnt exitst')
-            }
+            
 
             const newPortfolio = new UserPortfolio({
                 username,
@@ -58,7 +56,6 @@ module.exports = {
     Query: {
         async getPortfolios() {
             try {
-                console.log("in get portfolios");
                 const portfolios = await UserPortfolio.find();
                 return portfolios;
             }
