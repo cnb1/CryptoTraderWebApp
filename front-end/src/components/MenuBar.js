@@ -1,16 +1,23 @@
-import React from 'react';
-import { Navbar, Container } from 'react-bootstrap';
+import React from "react";
+import { Navbar, Container } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
+
 
 function MenuBar() {
-    return (
-        <nav class="navbar bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    Crypto Trader
-                </a>
-            </div>
-        </nav>
-    )
+
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    navigate('/');
+  }
+
+  return (
+    <Navbar bg="dark" variant="dark">
+      <Container>
+        <Navbar.Brand href="/" onClick={handleClick}>Crypto Trader</Navbar.Brand>
+      </Container>
+    </Navbar>
+  );
 }
 
 export default MenuBar;
