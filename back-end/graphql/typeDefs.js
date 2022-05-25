@@ -45,5 +45,6 @@ type Mutation {
     createUserPortfolio(userPortfolio: PortfolioInput): Portfolio!
     addPortfolio(userId: ID!, portfolioId: ID!): String!
     addPrice(price: Float!, portfolioId: ID!): Portfolio!
+    login(username: String!, password: String!): User!
 }
 `;
