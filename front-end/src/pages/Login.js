@@ -20,6 +20,7 @@ function Login() {
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
+      console.log('update');
       console.log(userData);
       context.login(userData);
       navigate("/");
@@ -27,12 +28,15 @@ function Login() {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.errors);
     },
-    variables: values,
+    variables: values
   });
 
   function loginUserCallback() {
     console.log('hello');
+    
     loginUser();
+
+    console.log('hello2')
   } 
 
   return (
@@ -42,13 +46,29 @@ function Login() {
       <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="Enter username" />
+          <Form.Control
+            label='username'
+            name='username'
+            type="text" 
+            placeholder="Enter username" 
+            value={values.username}
+            onChange={onChange}
+            />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control
+            label='password'
+            placeholder='Password..'
+            name='password'
+            type='password'
+            value={values.password}
+            onChange={onChange} 
+            placeholder="Password" />
         </Form.Group>
+
+
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
@@ -56,6 +76,8 @@ function Login() {
           Submit
         </Button>
       </Form>
+
+      
     </>
   );
 }

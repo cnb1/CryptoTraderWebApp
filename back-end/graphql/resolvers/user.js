@@ -68,11 +68,16 @@ module.exports = {
             return portfolioId
         },
         async login(_, {username, password}){
+
+            console.log('logging in...');
+            console.log('username: ' + username + '  password: ' + password);
+
             const {errors, valid} = validateLoginInput(username, password);
 
             if (!valid) {
                 throw new UserInputError('Errors', {errors});
             }
+            console.log('logging in 2...');
 
             const user = await User.findOne({username});
 
@@ -81,12 +86,17 @@ module.exports = {
                 throw new UserInputError('User not found', {errors});
             }
 
+            console.log('logging in 3...');
+
+
             const match = await bcrypt.compare(password, user.password);
 
             if (!match) {
                 errors.general = 'Wrong credentials';
                 throw new UserInputError('Wrong Credentials', {errors});
             }
+
+            console.log('logging in 4...');
 
             const token = generateToken(user);
 

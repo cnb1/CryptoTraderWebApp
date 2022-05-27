@@ -18,7 +18,7 @@ function Home() {
 
 
   const home = user ? (
-    <h1>{user}</h1>
+    <h1>Home with steve</h1>
   ) : (
     <>
       <div className='homediv'> 
