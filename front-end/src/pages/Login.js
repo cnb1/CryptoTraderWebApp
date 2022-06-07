@@ -32,11 +32,7 @@ function Login() {
   });
 
   function loginUserCallback() {
-    console.log('hello');
-    
     loginUser();
-
-    console.log('hello2')
   } 
 
   return (
@@ -65,7 +61,7 @@ function Login() {
             type='password'
             value={values.password}
             onChange={onChange} 
-            placeholder="Password" />
+            />
         </Form.Group>
 
 
