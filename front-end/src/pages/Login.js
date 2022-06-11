@@ -3,9 +3,9 @@ import gql from "graphql-tag";
 
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth";
-import {Form, Button} from 'react-bootstrap';
-import { useForm } from '../util/hooks';
-import {useMutation} from '@apollo/client';
+import { Form, Button } from "react-bootstrap";
+import { useForm } from "../util/hooks";
+import { useMutation } from "@apollo/client";
 
 function Login() {
   const context = useContext(AuthContext);
@@ -20,7 +20,7 @@ function Login() {
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
-      console.log('update');
+      console.log("update");
       console.log(userData);
       context.login(userData);
       navigate("/");
@@ -28,12 +28,12 @@ function Login() {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.errors);
     },
-    variables: values
+    variables: values,
   });
 
   function loginUserCallback() {
     loginUser();
-  } 
+  }
 
   return (
     <>
@@ -43,37 +43,31 @@ function Login() {
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Username</Form.Label>
           <Form.Control
-            label='username'
-            name='username'
-            type="text" 
-            placeholder="Enter username" 
+            label="username"
+            name="username"
+            type="text"
+            placeholder="Enter username"
             value={values.username}
             onChange={onChange}
-            />
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            label='password'
-            placeholder='Password..'
-            name='password'
-            type='password'
+            label="password"
+            placeholder="Password.."
+            name="password"
+            type="password"
             value={values.password}
-            onChange={onChange} 
-            />
+            onChange={onChange}
+          />
         </Form.Group>
 
-
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
         <Button variant="primary" type="submit">
           Submit
         </Button>
       </Form>
-
-      
     </>
   );
 }
