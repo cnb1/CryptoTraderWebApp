@@ -20,7 +20,6 @@ function Login() {
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
-      console.log("update");
       console.log(userData);
       context.login(userData);
       navigate("/");
@@ -80,6 +79,7 @@ const LOGIN_USER = gql`
       username
       createdAt
       token
+      userportfolio
     }
   }
 `;
