@@ -1,5 +1,6 @@
 const { UserInputError } = require('apollo-server');
 const UserPortfolio = require('../../models/userportfolio');
+const Stragety = require('../../models/strategy');
 const userResolvers = require('./user');
 
 module.exports = {
@@ -74,6 +75,15 @@ module.exports = {
                 throw new UserInputError("Portfolio doesnt exitst");
             }
 
-        }
+        },
+        async getStrategys() {
+            try {
+                const strategys = await Stragety.find();
+                return strategys;
+            }
+            catch (err) {
+                throw Error(err);
+            }
+         }
     }
 }

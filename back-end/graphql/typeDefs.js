@@ -14,6 +14,10 @@ type Price {
     price: Float!
     date: String!
 }
+type Strategy {
+    id: ID!
+    strategy: String!
+}
 type Portfolio {
     id: ID!
     username: String!
@@ -40,6 +44,7 @@ type Query {
     getPortfolios: [Portfolio]
     getPortfolio(portfolioId: ID!): Portfolio
     getUser(userId: ID!): User!
+    getStrategys: [Strategy]
 }
 type Mutation {
     registerUser(registerInput: RegisterInput): User!
