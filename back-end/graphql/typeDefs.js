@@ -39,6 +39,7 @@ type Query {
     getUsers: [User]
     getPortfolios: [Portfolio]
     getPortfolio(portfolioId: ID!): Portfolio
+    getUser(userId: ID!): User!
 }
 type Mutation {
     registerUser(registerInput: RegisterInput): User!

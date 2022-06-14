@@ -112,6 +112,16 @@ module.exports = {
             catch (err) {
                 throw new Error(err);
             }
+        },
+        async getUser(_, {userId}) {
+            const user = await User.findById(userId);
+
+            if (user) {
+                return user;
+            }
+            else {
+                throw new UserInputError("User doesnt exitst");
+            }
         }
     }
 }
