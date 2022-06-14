@@ -2,6 +2,8 @@ import React from "react";
 import { AuthContext } from "../context/auth";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
+import { Button } from "react-bootstrap";
+
 
 function UserProfile( { user: {id, username, email, userportfolio}} ) {
 
@@ -20,14 +22,15 @@ function UserProfile( { user: {id, username, email, userportfolio}} ) {
 
   return (
     <>
+    <h1>Hello : {username}</h1>
+    
       {portfolio ? (
         <>
-          <h2>portfolio found {portfolio.strategy}</h2>
-          <h2>portfolio found {portfolio.username}</h2>
+          <h2>Portfolio : {portfolio.strategy}</h2>
         </>
       ) : (
-        <h2>portfolio not found</h2>
-      )}
+        <Button>Add Portfolio</Button>
+        )}
     </>
   );
 }

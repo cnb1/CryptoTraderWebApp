@@ -70,8 +70,6 @@ module.exports = {
         },
         async login(_, {username, password}){
 
-            console.log('username: ' + username + '  password: ' + password);
-
             const {errors, valid} = validateLoginInput(username, password);
 
             if (!valid) {
