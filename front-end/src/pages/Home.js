@@ -6,16 +6,12 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 
 import "../styles/Home.css";
+import UserProfile from '../components/UserProfile';
 
 function Home() {
   const { user, logout } = useContext(AuthContext);
 
-  const userId = user ? user.id : "";
-  const isusernull = userId === "" ? true : false;
-  console.log("print user");
-  console.log(user);
-  console.log(userId);
-  console.log(isusernull);
+  const userId = user ? user.id : null;
 
   const {
     loadinguser,
@@ -23,32 +19,10 @@ function Home() {
     data: { getUser: usercurrent } = {},
   } = useQuery(GET_USER, {
     variables: {
-      userId,
+      userId
     },
+    skip: (userId === null)
   });
-
-  const portfolioId = (usercurrent && ('userportfolio' in usercurrent)) ? usercurrent.userportfolio : false;
-
-  const {
-    loading,
-    error,
-    data: { getPortfolio: portfolio } = {},
-  } = useQuery(GET_PORTFOLIO, {
-    variables: {
-      portfolioId
-    },
-    skip : !portfolioId
-  });
-
-  // const portfolioId = usercurrent.userportfolio ===null ? usercurrent.userportfolio : null;
-  // const isusercurrentnull = portfolioId  ? true : false;
-
-  // console.log("is user current null")
-  // console.log(isusercurrentnull)
-
-  // if (portfolioId) {
-  //   // console.log("portfolio id:" + portfolioId.userportfolio);
-  // }
 
   const navigate = useNavigate();
 
@@ -59,20 +33,10 @@ function Home() {
 
   if (user && !usercurrent) {
     return <h1>Loading...</h1>;
-
   } else {
 
     const home = user ? (
-      <>
-        {portfolio ? (
-          <>
-            <h2>portfolio found {portfolio.strategy}</h2>
-            <h2>portfolio found {portfolio.username}</h2>
-          </>
-        ) : (
-          <h2>portfolio not found</h2>
-        )}
-      </>
+      <UserProfile user={usercurrent}/>
     ) : (
       <>
         <div className="homediv">
@@ -102,20 +66,12 @@ function Home() {
   }
 }
 
-const GET_PORTFOLIO = gql`
-  query getPortfolio($portfolioId: ID!) {
-    getPortfolio(portfolioId: $portfolioId) {
-      username
-      strategy
-    }
-  }
-`;
-
 const GET_USER = gql`
   query GetUser($userId: ID!) {
     getUser(userId: $userId) {
       id
       username
+      email
       userportfolio
     }
   }
