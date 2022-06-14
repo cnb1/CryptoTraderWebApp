@@ -11,14 +11,14 @@ function Home() {
   const { user, logout } = useContext(AuthContext);
 
   if (user) {
-    console.log('printing user in home');
-    console.log(user);
+    // console.log('printing user in home');
+    // console.log(user);
   }
 
   const portfolioId = user;
 
   if (portfolioId) {
-    console.log("portfolio id:" + portfolioId.userportfolio);
+    // console.log("portfolio id:" + portfolioId.userportfolio);
   }
 
   const {
