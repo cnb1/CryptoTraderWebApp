@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { AuthContext } from "../context/auth";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
-import { Button, Dropdown } from "react-bootstrap";
+import { Form, Button, Dropdown } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { useForm } from "../util/hooks";
 
@@ -10,10 +10,9 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
   const portfolioId = userportfolio;
   const [errors, setErrors] = useState({});
 
-
-  const { onChange, onClick, values } = useForm(handleClick, {
-    strategy: "",
-    portfolioId: portfolioId
+  const { onChange, onSubmit, values } = useForm(handleClick, {
+    strategy: "RRR",
+    portfolioId: portfolioId,
   });
 
   const {
@@ -41,9 +40,9 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
     data: { getStrategys: strategies } = {},
   } = useQuery(GET_STRATEGIES);
 
-  function handleClick(strategy) {
+  function handleClick() {
     console.log("clicked RSI");
-    console.log(strategy);
+    console.log(values);
     updateStrategy();
   }
 
@@ -54,23 +53,31 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
       {portfolio ? (
         <>
           <h2>Portfolio : {portfolio.strategy}</h2>
-          <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
-              Change Portfolio
-            </Dropdown.Toggle>
+          <Form onSubmit={onSubmit}>
+            <Dropdown>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Change Portfolio
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              {strategies &&
-                strategies.map((strat) => (
-                  <Dropdown.Item
-                    key={strat.id}
-                    onClick={handleClick(strat.strategy)}
-                  >
-                    {strat.strategy}
-                  </Dropdown.Item>
-                ))}
-            </Dropdown.Menu>
-          </Dropdown>
+              <Dropdown.Menu>
+                {strategies &&
+                  strategies.map((strat) => (
+                    <Dropdown.Item
+                      key={strat.id}
+                      label="strategy"
+                      name="strategy"
+                      onChange={onChange}
+                    >
+                      {strat.strategy}
+                    </Dropdown.Item>
+                  ))}
+              </Dropdown.Menu>
+            </Dropdown>
+
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
         </>
       ) : (
         <Dropdown>
