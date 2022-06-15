@@ -11,7 +11,7 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
   const [errors, setErrors] = useState({});
 
   const { onChange, onSubmit, values } = useForm(handleClick, {
-    strategy: "RRR",
+    strategy: "www",
     portfolioId: portfolioId,
   });
 
@@ -27,7 +27,18 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
   });
 
   const [updateStrategy, { loadingupdate }] = useMutation(UPDATE_STRATEGY, {
-    update(_, { data: { updateStrategy: updatedStrategy } }) {},
+    update(cache, { data: { updateStrategy: updatedStrategy } }) {
+        const data = cache.readQuery({
+            query: GET_PORTFOLIO,
+            variables: {portfolioId}
+        });
+
+        cache.writeQuery({ 
+            query: GET_PORTFOLIO,
+            data: {getPortfolio: [data.updateStrategy, ...data.getPortfolio]}
+        });
+        {console.log(data)}
+    },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.errors);
     },
@@ -67,6 +78,7 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
                       label="strategy"
                       name="strategy"
                       onChange={onChange}
+                      value={strat.strategy}
                     >
                       {strat.strategy}
                     </Dropdown.Item>
