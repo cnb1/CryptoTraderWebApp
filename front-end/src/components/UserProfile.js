@@ -1,14 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import { AuthContext } from "../context/auth";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import { Button, Dropdown } from "react-bootstrap";
-
+import { useMutation } from "@apollo/client";
+import { useForm } from "../util/hooks";
 
 function UserProfile({ user: { id, username, email, userportfolio } }) {
-
   const portfolioId = userportfolio;
-  // console.log(user)
+  const [errors, setErrors] = useState({});
+
+
+  const { onChange, onClick, values } = useForm(handleClick, {
+    strategy: "",
+    portfolioId: portfolioId
+  });
+
   const {
     loading,
     error,
@@ -20,6 +27,25 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
     skip: !portfolioId,
   });
 
+  const [updateStrategy, { loadingupdate }] = useMutation(UPDATE_STRATEGY, {
+    update(_, { data: { updateStrategy: updatedStrategy } }) {},
+    onError(err) {
+      setErrors(err.graphQLErrors[0].extensions.errors);
+    },
+    variables: values,
+  });
+
+  const {
+    loadingstrat,
+    errorstrat,
+    data: { getStrategys: strategies } = {},
+  } = useQuery(GET_STRATEGIES);
+
+  function handleClick(strategy) {
+    console.log("clicked RSI");
+    console.log(strategy);
+    updateStrategy();
+  }
 
   return (
     <>
@@ -34,9 +60,15 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+              {strategies &&
+                strategies.map((strat) => (
+                  <Dropdown.Item
+                    key={strat.id}
+                    onClick={handleClick(strat.strategy)}
+                  >
+                    {strat.strategy}
+                  </Dropdown.Item>
+                ))}
             </Dropdown.Menu>
           </Dropdown>
         </>
@@ -47,9 +79,15 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            {strategies &&
+              strategies.map((strat) => (
+                <Dropdown.Item
+                  key={strat.id}
+                  onClick={() => handleClick(strat.strategy)}
+                >
+                  {strat.strategy}
+                </Dropdown.Item>
+              ))}
           </Dropdown.Menu>
         </Dropdown>
       )}
@@ -60,6 +98,24 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
 const GET_PORTFOLIO = gql`
   query getPortfolio($portfolioId: ID!) {
     getPortfolio(portfolioId: $portfolioId) {
+      username
+      strategy
+    }
+  }
+`;
+
+const GET_STRATEGIES = gql`
+  query GetStrategys {
+    getStrategys {
+      id
+      strategy
+    }
+  }
+`;
+
+const UPDATE_STRATEGY = gql`
+  mutation UpdateStrategy($strategy: String!, $portfolioId: ID!) {
+    updateStrategy(strategy: $strategy, portfolioId: $portfolioId) {
       username
       strategy
     }

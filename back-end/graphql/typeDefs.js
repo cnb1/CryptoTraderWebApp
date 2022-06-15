@@ -52,5 +52,6 @@ type Mutation {
     addPortfolio(userId: ID!, portfolioId: ID!): String!
     addPrice(price: Float!, portfolioId: ID!): Portfolio!
     login(username: String!, password: String!): User!
+    updateStrategy(strategy: String!, portfolioId: ID!): Portfolio!
 }
 `;

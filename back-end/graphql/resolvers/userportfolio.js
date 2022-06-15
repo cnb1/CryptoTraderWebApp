@@ -52,6 +52,18 @@ module.exports = {
             else {
                 throw new UserInputError('Portfolio not found')
             }
+        },
+        async updateStrategy(_, {strategy, portfolioId}) {
+            const portfolio = await UserPortfolio.findById(portfolioId);
+
+            if (portfolio) {
+                portfolio.strategy = strategy;
+                await portfolio.save();
+                return portfolio;
+            }
+            else {
+                throw new UserInputError('Portfolio not found')
+            }
         }
     },
     Query: {
