@@ -9,11 +9,7 @@ import { useForm } from "../util/hooks";
 function UserProfile({ user: { id, username, email, userportfolio } }) {
   const portfolioId = userportfolio;
   const [errors, setErrors] = useState({});
-
-  const { onChange, onSubmit, values } = useForm(handleClick, {
-    strategy: "www",
-    portfolioId: portfolioId,
-  });
+  const [state, setState] = useState(true);
 
   const {
     loading,
@@ -26,21 +22,35 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
     skip: !portfolioId,
   });
 
-  const [updateStrategy, { loadingupdate }] = useMutation(UPDATE_STRATEGY, {
-    update(cache, { data: { updateStrategy: updatedStrategy } }) {
-        const data = cache.readQuery({
-            query: GET_PORTFOLIO,
-            variables: {portfolioId}
-        });
+  const { onChange, onSubmit, values } = useForm(handleClick, {
+    strategy: "",
+    portfolioId: portfolioId,
+  });
 
-        cache.writeQuery({ 
-            query: GET_PORTFOLIO,
-            data: {getPortfolio: [data.updateStrategy, ...data.getPortfolio]}
-        });
-        {console.log(data)}
+  const [updateStrategy, { loadingupdate }] = useMutation(UPDATE_STRATEGY, {
+    update(cache, result) {
+        console.log("beggining")
+        console.log(result)
+      const data = cache.readQuery({
+        query: GET_PORTFOLIO,
+        variables: { portfolioId },
+      });
+      console.log(data)
+      console.log("end")
+
+
+
+      cache.writeQuery({
+        query: GET_PORTFOLIO,
+        // data : {getPortfolio : [result.data.updateStrategy.strategy, ...data.getPortfolio]},
+      });
+      {
+        console.log("printing cache update");
+        console.log(data);
+      }
     },
     onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.errors);
+      setErrors(err);
     },
     variables: values,
   });
@@ -51,10 +61,18 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
     data: { getStrategys: strategies } = {},
   } = useQuery(GET_STRATEGIES);
 
-  function handleClick() {
-    console.log("clicked RSI");
-    console.log(values);
+  function handleClick(strategy) {
     updateStrategy();
+  }
+
+  function callback(value) {
+    if (value !== "") {
+      console.log("setting new strategy");
+      values.strategy = value;
+      setState(false);
+    } else {
+      setState(true);
+    }
   }
 
   return (
@@ -65,30 +83,28 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
         <>
           <h2>Portfolio : {portfolio.strategy}</h2>
           <Form onSubmit={onSubmit}>
-            <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Change Portfolio
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                {strategies &&
-                  strategies.map((strat) => (
-                    <Dropdown.Item
-                      key={strat.id}
-                      label="strategy"
-                      name="strategy"
-                      onChange={onChange}
-                      value={strat.strategy}
-                    >
-                      {strat.strategy}
-                    </Dropdown.Item>
-                  ))}
-              </Dropdown.Menu>
-            </Dropdown>
-
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+            <fieldset>
+              <Form.Group className="mb-3">
+                <Form.Select
+                  onChange={({ target: { value } }) => callback(value)}
+                >
+                  <option label="Select Strategy"></option>
+                  {strategies &&
+                    strategies.map((strat) => (
+                      <option
+                        key={strat.id}
+                        name="strategy"
+                        value={strat.strategy}
+                      >
+                        {strat.strategy}
+                      </option>
+                    ))}
+                </Form.Select>
+              </Form.Group>
+              <Button type="submit" disabled={state}>
+                Update Strategy
+              </Button>
+            </fieldset>
           </Form>
         </>
       ) : (
@@ -117,6 +133,7 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
 const GET_PORTFOLIO = gql`
   query getPortfolio($portfolioId: ID!) {
     getPortfolio(portfolioId: $portfolioId) {
+      id
       username
       strategy
     }
@@ -135,6 +152,7 @@ const GET_STRATEGIES = gql`
 const UPDATE_STRATEGY = gql`
   mutation UpdateStrategy($strategy: String!, $portfolioId: ID!) {
     updateStrategy(strategy: $strategy, portfolioId: $portfolioId) {
+      id
       username
       strategy
     }
