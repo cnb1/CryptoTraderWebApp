@@ -29,25 +29,16 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
 
   const [updateStrategy, { loadingupdate }] = useMutation(UPDATE_STRATEGY, {
     update(cache, result) {
-        console.log("beggining")
-        console.log(result)
       const data = cache.readQuery({
         query: GET_PORTFOLIO,
         variables: { portfolioId },
       });
-      console.log(data)
-      console.log("end")
-
-
 
       cache.writeQuery({
         query: GET_PORTFOLIO,
-        // data : {getPortfolio : [result.data.updateStrategy.strategy, ...data.getPortfolio]},
+        variables: { portfolioId },
+        data
       });
-      {
-        console.log("printing cache update");
-        console.log(data);
-      }
     },
     onError(err) {
       setErrors(err);
