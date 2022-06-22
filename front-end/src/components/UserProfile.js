@@ -5,6 +5,10 @@ import { useQuery } from "@apollo/client";
 import { Form, Button, Dropdown } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { useForm } from "../util/hooks";
+import UpdateStrategy from "./UpdateStrategy";
+import AddStrategy from "./AddStrategy";
+
+
 
 function UserProfile({ user: { id, username, email, userportfolio } }) {
   const portfolioId = userportfolio;
@@ -37,7 +41,7 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
       cache.writeQuery({
         query: GET_PORTFOLIO,
         variables: { portfolioId },
-        data
+        data,
       });
     },
     onError(err) {
@@ -72,7 +76,7 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
 
       {portfolio ? (
         <>
-          <h2>Portfolio : {portfolio.strategy}</h2>
+          {/* <h2>Portfolio : {portfolio.strategy}</h2>
           <Form onSubmit={onSubmit}>
             <fieldset>
               <Form.Group className="mb-3">
@@ -96,26 +100,19 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
                 Update Strategy
               </Button>
             </fieldset>
-          </Form>
+          </Form> */}
+
+          <UpdateStrategy/>
         </>
       ) : (
-        <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Add Portfolio
-          </Dropdown.Toggle>
+        
+        <AddStrategy items={{
+            id,
+            username,
+            strategies,
+            userportfolio
+        }}/>
 
-          <Dropdown.Menu>
-            {strategies &&
-              strategies.map((strat) => (
-                <Dropdown.Item
-                  key={strat.id}
-                  onClick={() => handleClick(strat.strategy)}
-                >
-                  {strat.strategy}
-                </Dropdown.Item>
-              ))}
-          </Dropdown.Menu>
-        </Dropdown>
       )}
     </>
   );

@@ -10,6 +10,8 @@ module.exports = {
                 userPortfolio: {userId, username, strategy, userportfolio}
             }) {
 
+                console.log("create user portfolio ...")
+
             if (userportfolio) {
                 throw new UserInputError('Portfolio exists');
             }
