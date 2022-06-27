@@ -9,6 +9,9 @@ import { useQuery } from "@apollo/client";
 function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
   const [state, setState] = useState(true);
   const [errors, setErrors] = useState({});
+  // const [statePortfolio, setState] = useState(true);
+
+  console.log("user portfolio->" + userportfolio)
 
   const navigate = useNavigate();
 
@@ -33,7 +36,9 @@ function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
     CREATE_USER_PORTFOLIO,
     {
       update(cache, result) {
-
+        console.log("result is -> " + result)
+        console.log(result.data.createUserPortfolio.id)
+        console.log(createUserPortfolio.id)
         const data = cache.readQuery({
           query: GET_USER,
           variables: { userId: values.userId },
@@ -41,10 +46,17 @@ function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
         console.log("updating user port in cache")
         console.log(data);
 
+        const datatemp = {
+          email: data.getUser.email,
+          id : data.getUser.id,
+          username: data.getUser.username,
+          userportfolio: result.createUserPortfolio.id
+        }
+
         cache.writeQuery({
           query: GET_USER,
           variables: { userId: values.userId },
-          data,
+          datatemp
         });
 
         navigate("/");
