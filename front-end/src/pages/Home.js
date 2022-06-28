@@ -36,29 +36,33 @@ function Home() {
   } else {
 
     const home = user ? (
-      <UserProfile user={usercurrent}/>
+      <UserProfile user={usercurrent} />
     ) : (
       <>
-        <div className="homediv">
-          <Button
-            variant="primary"
-            size="lg"
-            className="button-custom"
-            onClick={() => handleClick("login")}
-          >
-            Login
-          </Button>
-          <br></br>
-          <br></br>
-          <Button
-            variant="secondary"
-            size="lg"
-            className="button-custom"
-            onClick={() => handleClick("register")}
-          >
-            Register
-          </Button>
-        </div>
+          <div className="homediv">
+            <div className="shadow-lg p-3 mb-5 bg-white rounded">
+              <Button
+                variant="primary"
+                size="lg"
+                className="button-custom"
+                onClick={() => handleClick("login")}
+              >
+                Login
+              </Button>
+              <br></br>
+              <br></br>
+              <Button
+                variant="secondary"
+                size="lg"
+                className="button-custom"
+                onClick={() => handleClick("register")}
+              >
+                Register
+              </Button>
+            </div>
+          </div>
+
+
       </>
     );
 

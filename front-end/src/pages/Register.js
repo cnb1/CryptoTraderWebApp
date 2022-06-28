@@ -7,6 +7,9 @@ import { useForm } from "../util/hooks";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 
+import "../styles/Register.css";
+
+
 function Register() {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
@@ -38,61 +41,65 @@ function Register() {
 
   return (
     <>
-      <h1>Register page</h1>
+      <div className="parentlogin">
+        <div className="shadow-lg p-3 mb-5 bg-white rounded">
+          <h1>Register</h1>
 
-      <Form onSubmit={onSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            label="username"
-            name="username"
-            type="text"
-            placeholder="Enter username"
-            value={values.username}
-            onChange={onChange}
-          />
-        </Form.Group>
+          <Form onSubmit={onSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                label="username"
+                name="username"
+                type="text"
+                placeholder="Enter username"
+                value={values.username}
+                onChange={onChange}
+              />
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            label="email"
-            name="email"
-            type="text"
-            placeholder="Enter email"
-            value={values.email}
-            onChange={onChange}
-          />
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                label="email"
+                name="email"
+                type="text"
+                placeholder="Enter email"
+                value={values.email}
+                onChange={onChange}
+              />
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            label="password"
-            placeholder="Password.."
-            name="password"
-            type="password"
-            value={values.password}
-            onChange={onChange}
-          />
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                label="password"
+                placeholder="Password.."
+                name="password"
+                type="password"
+                value={values.password}
+                onChange={onChange}
+              />
+            </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            label="confirmPassword"
-            placeholder="Password.."
-            name="confirmPassword"
-            type="password"
-            value={values.confirmPassword}
-            onChange={onChange}
-          />
-        </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                label="confirmPassword"
+                placeholder="Password.."
+                name="confirmPassword"
+                type="password"
+                value={values.confirmPassword}
+                onChange={onChange}
+              />
+            </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+        </div>
+      </div>
     </>
   );
 }

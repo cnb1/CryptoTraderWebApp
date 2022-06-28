@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
-import { Form, Button, Dropdown } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import { useForm } from "../util/hooks";
+import PriceChart from "./PriceChart";
 
 function UpdateStrategy({
   items: { id, username, strategies, userportfolio },
@@ -24,8 +25,7 @@ function UpdateStrategy({
   } = useQuery(GET_PORTFOLIO, {
     variables: {
       portfolioId,
-    },
-    skip: !portfolioId,
+    }
   });
 
   const [updateStrategy, { loadingupdate }] = useMutation(UPDATE_STRATEGY, {
@@ -48,15 +48,11 @@ function UpdateStrategy({
   });
 
   function handleClick(strategy) {
-    console.log("printing strategy");
-    console.log(strategy);
-    console.log(values);
     updateStrategy();
   }
 
   function callback(value) {
     if (value !== "") {
-      console.log("setting new strategy");
       values.strategy = value;
       setState(false);
     } else {
@@ -85,6 +81,8 @@ function UpdateStrategy({
           </Button>
         </fieldset>
       </Form>
+      <br/>
+      <PriceChart items={{portfolioId}}/>
     </>
   );
 }

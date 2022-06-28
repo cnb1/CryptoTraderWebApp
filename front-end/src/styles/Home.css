@@ -1,5 +1,14 @@
+.parentdiv {
+    vertical-align: center;
+}
+
 .homediv {
-    padding-top: 10%;
+    vertical-align: center;
+    margin-top: 20%;
+    margin-left: 40%;
+    width: 20em;
+    height: 50em;
+    margin-right: 40%;
     text-align: center;
 }
 
