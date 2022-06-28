@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "../util/hooks";
-import { Form, Button, Dropdown } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
@@ -36,27 +36,15 @@ function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
     CREATE_USER_PORTFOLIO,
     {
       update(cache, result) {
-        console.log("result is -> " + result)
-        console.log(result.data.createUserPortfolio.id)
-        console.log(createUserPortfolio.id)
         const data = cache.readQuery({
           query: GET_USER,
           variables: { userId: values.userId },
         });
-        console.log("updating user port in cache")
-        console.log(data);
-
-        const datatemp = {
-          email: data.getUser.email,
-          id : data.getUser.id,
-          username: data.getUser.username,
-          userportfolio: result.createUserPortfolio.id
-        }
 
         cache.writeQuery({
           query: GET_USER,
           variables: { userId: values.userId },
-          datatemp
+          data : { getUser : {userportfolio : result.data.createUserPortfolio.id}}
         });
 
         navigate("/");
