@@ -44,7 +44,12 @@ function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
         cache.writeQuery({
           query: GET_USER,
           variables: { userId: values.userId },
-          data : { getUser : {userportfolio : result.data.createUserPortfolio.id}}
+          data : { getUser : {
+            id : data.getUser.id,
+            username : data.getUser.username,
+            email : data.getUser.email,
+            userportfolio : result.data.createUserPortfolio.id
+          }}
         });
 
         navigate("/");
