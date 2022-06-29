@@ -6,6 +6,8 @@ import { useQuery } from "@apollo/client";
 import { useForm } from "../util/hooks";
 import PriceChart from "./PriceChart";
 
+// import "../styles/UpdateStrategy.css";
+
 function UpdateStrategy({
   items: { id, username, strategies, userportfolio },
 }) {
@@ -50,11 +52,8 @@ function UpdateStrategy({
     variables: {
       portfolioId,
     }
-  },
-    {
-      // Refetch the data every second
-      refetchInterval: 1000,
-    });
+  });
+
 
   const [updateStrategy, { loadingupdate }] = useMutation(UPDATE_STRATEGY, {
     update(cache, result) {
@@ -92,27 +91,35 @@ function UpdateStrategy({
 
   return (
     <>
-      <h2>Portfolio : {portfolio.strategy}</h2>
-      <Form onSubmit={onSubmit}>
-        <fieldset>
-          <Form.Group className="mb-3">
-            <Form.Select onChange={({ target: { value } }) => callback(value)}>
-              <option label="Select Strategy"></option>
-              {strategies &&
-                strategies.map((strat) => (
-                  <option key={strat.id} name="strategy" value={strat.strategy}>
-                    {strat.strategy}
-                  </option>
-                ))}
-            </Form.Select>
-          </Form.Group>
-          <Button type="submit" disabled={state}>
-            Update Strategy
-          </Button>
-        </fieldset>
-      </Form>
-      <br />
-      <PriceChart items={{ portfolioId }} />
+      <div className="parentstrategy">
+        <h2>Portfolio : {portfolio.strategy}</h2>
+        <Form onSubmit={onSubmit}>
+          <fieldset>
+            <Form.Group className="mb-3">
+              <Form.Select
+                onChange={({ target: { value } }) => callback(value)}
+              >
+                <option label="Select Strategy"></option>
+                {strategies &&
+                  strategies.map((strat) => (
+                    <option
+                      key={strat.id}
+                      name="strategy"
+                      value={strat.strategy}
+                    >
+                      {strat.strategy}
+                    </option>
+                  ))}
+              </Form.Select>
+            </Form.Group>
+            <Button type="submit" disabled={state}>
+              Update Strategy
+            </Button>
+          </fieldset>
+        </Form>
+        <br />
+        <PriceChart items={{ portfolioId }} />
+      </div>
     </>
   );
 }

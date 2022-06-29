@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { Navbar, Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import '../styles/MenuBar.css'
+import "../styles/MenuBar.css";
 import { AuthContext } from "../context/auth";
+
 
 function MenuBar() {
   const { user, logout } = useContext(AuthContext);
@@ -16,24 +17,23 @@ function MenuBar() {
   const menuBar = user ? (
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Navbar.Collapse>
-          <Navbar.Brand href="/" onClick={handleClick}>
-            Crypto Trader
-          </Navbar.Brand>
+        <Navbar.Collapse className='title2'>
+            <Navbar.Brand href="/" onClick={handleClick} className='title'>
+              Crypto Trader
+            </Navbar.Brand>
         </Navbar.Collapse>
 
         <Button className="button-logout" name="Logout" onClick={logout}>
-            Logout
+          Logout
         </Button>
-
       </Container>
     </Navbar>
   ) : (
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="/" onClick={handleClick}>
-          Crypto Trader
-        </Navbar.Brand>
+          <Navbar.Brand href="/" onClick={handleClick} className='title'>
+            Crypto Trader
+          </Navbar.Brand>
       </Container>
     </Navbar>
   );
