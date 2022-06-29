@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { AuthContext } from "../context/auth";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
-import { Form, Button, Dropdown } from "react-bootstrap";
-import { useMutation } from "@apollo/client";
-import { useForm } from "../util/hooks";
 import UpdateStrategy from "./UpdateStrategy";
 import AddStrategy from "./AddStrategy";
+
+import '../styles/UserProfile.css';
+
 
 function UserProfile({ user: { id, username, email, userportfolio } }) {
   const portfolioId = userportfolio;
@@ -32,11 +31,22 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
 
   return (
     <>
-      <h1>Hello : {username}</h1>
+      <div className="userProfileParent">
+        <h1>Hello : {username}</h1>
 
-      {portfolio ? (
-        <>
-          <UpdateStrategy
+        {portfolio ? (
+          <>
+            <UpdateStrategy
+              items={{
+                id,
+                username,
+                strategies,
+                userportfolio,
+              }}
+            />
+          </>
+        ) : (
+          <AddStrategy
             items={{
               id,
               username,
@@ -44,17 +54,8 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
               userportfolio,
             }}
           />
-        </>
-      ) : (
-        <AddStrategy
-          items={{
-            id,
-            username,
-            strategies,
-            userportfolio,
-          }}
-        />
-      )}
+        )}
+      </div>
     </>
   );
 }
