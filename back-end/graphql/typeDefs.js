@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require('apollo-server-express');
 
 module.exports = gql`
 type User {
@@ -53,5 +53,9 @@ type Mutation {
     addPrice(price: Float!, portfolioId: ID!): Portfolio!
     login(username: String!, password: String!): User!
     updateStrategy(strategy: String!, portfolioId: ID!): Portfolio!
+}
+
+type Subscription {
+    newPrice: Portfolio!
 }
 `;
