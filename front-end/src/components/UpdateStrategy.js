@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import gql from "graphql-tag";
 import { Form, Button } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
@@ -23,16 +23,45 @@ function UpdateStrategy({
     error,
     data: { getPortfolio: portfolio } = {},
   } = useQuery(GET_PORTFOLIO, {
+    update(cache, result) {
+      const data = cache.readQuery({
+        query: GET_PORTFOLIO,
+        variables: {
+          portfolioId,
+        }
+      });
+
+      cache.writeQuery({
+        query: GET_PORTFOLIO,
+        variables: {
+          portfolioId,
+        },
+        data: {
+          getPortfolio: {
+            id: data.getPortfolio.id,
+            username: data.getPortfolio.username,
+            strategy: data.getPortfolio.strategy,
+            valueHistory: data.getPortfolio.valueHistory
+          }
+        }
+      });
+
+    },
     variables: {
       portfolioId,
     }
-  });
+  },
+    {
+      // Refetch the data every second
+      refetchInterval: 1000,
+    });
 
   const [updateStrategy, { loadingupdate }] = useMutation(UPDATE_STRATEGY, {
     update(cache, result) {
       const data = cache.readQuery({
         query: GET_PORTFOLIO,
         variables: { portfolioId },
+        refetchInterval: 1000
       });
 
       cache.writeQuery({
@@ -44,7 +73,7 @@ function UpdateStrategy({
     onError(err) {
       setErrors(err);
     },
-    variables: values,
+    variables: values
   });
 
   function handleClick(strategy) {
@@ -59,6 +88,7 @@ function UpdateStrategy({
       setState(true);
     }
   }
+
 
   return (
     <>
@@ -81,8 +111,8 @@ function UpdateStrategy({
           </Button>
         </fieldset>
       </Form>
-      <br/>
-      <PriceChart items={{portfolioId}}/>
+      <br />
+      <PriceChart items={{ portfolioId }} />
     </>
   );
 }
