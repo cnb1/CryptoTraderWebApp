@@ -11,7 +11,9 @@ const express = require('express');
 
 
 const { MONGODB } = require('./config.js');
+const { PubSub } = require('graphql-subscriptions');
 
+const pubsub = new PubSub();
 
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
@@ -32,7 +34,7 @@ const server = new ApolloServer({
     csrfPrevention: true,
     cache: "bounded",
     context: ({ req, res }) => {
-        return { req, res }
+        return { req, res, pubsub }
     },
     plugins: [
         // Proper shutdown for the HTTP server.

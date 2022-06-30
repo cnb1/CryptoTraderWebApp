@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import gql from "graphql-tag";
 import { Form, Button } from "react-bootstrap";
 import { useMutation } from "@apollo/client";

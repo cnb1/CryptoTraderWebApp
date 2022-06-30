@@ -56,6 +56,6 @@ type Mutation {
 }
 
 type Subscription {
-    newPrice: Portfolio!
+    newPrice: Portfolio
 }
 `;

@@ -3,10 +3,6 @@ const UserPortfolio = require('../../models/userportfolio');
 const Stragety = require('../../models/strategy');
 const userResolvers = require('./user');
 
-const { PubSub } = require('graphql-subscriptions');
-
-const pubsub = new PubSub();
-
 
 module.exports = {
     Mutation: {
@@ -53,7 +49,7 @@ module.exports = {
                     date: new Date().toISOString()
                 })
 
-                pubsub.publish('NEW_PRICE', {
+                context.pubsub.publish('NEW_PRICE', {
                     newPrice: portfolio
                 });
 
@@ -111,7 +107,7 @@ module.exports = {
     },
     Subscription : {
         newPrice: {
-            subscribe: () => pubsub.asyncIterator("NEW_PRICE")
+            subscribe: (_, __, {pubsub}) => pubsub.asyncIterator("NEW_PRICE")
         }
     }
 }
