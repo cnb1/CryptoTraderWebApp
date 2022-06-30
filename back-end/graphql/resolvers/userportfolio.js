@@ -1,7 +1,8 @@
-const { UserInputError } = require('apollo-server');
+const { UserInputError } = require('apollo-server-express');
 const UserPortfolio = require('../../models/userportfolio');
 const Stragety = require('../../models/strategy');
 const userResolvers = require('./user');
+const pubsub = require('../pubsub.js');
 
 
 module.exports = {
@@ -49,12 +50,26 @@ module.exports = {
                     date: new Date().toISOString()
                 })
 
-                context.pubsub.publish('NEW_PRICE', {
-                    newPrice: portfolio
-                });
+                // pubsub.publish('NEW_PRICE', {
+                //     newPrice: portfolio
+                // });
 
-                await portfolio.save();
-                return portfolio;
+                return portfolio.save().
+                then(result=> {
+                    console.log('subscription trigger')
+                    pubsub.publish('NEW_PRICE', {
+                        addPrice: {
+                            id: portfolio.id,
+                            username: portfolio.id,
+                            valueHistory : portfolio.valueHistory
+                        }
+                    });
+                    console.log(pubsub);
+                    return portfolio;
+                })
+                .catch(err => {
+                    console.error(err);
+                });
             }
             else {
                 throw new UserInputError('Portfolio not found')
@@ -106,8 +121,10 @@ module.exports = {
          }
     },
     Subscription : {
-        newPrice: {
-            subscribe: (_, __, {pubsub}) => pubsub.asyncIterator("NEW_PRICE")
+        addPrice: {
+            subscribe: () => {
+                return pubsub.asyncIterator('NEW_PRICE')
+            }
         }
     }
 }

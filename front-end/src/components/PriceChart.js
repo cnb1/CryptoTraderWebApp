@@ -7,22 +7,12 @@ import { Line } from "react-chartjs-2";
 
 function PriceChart({ items: { portfolioId } }) {
     console.log(portfolioId);
-
-    // const {datasub2, loadingsub2} = useSubscription(
-    //     PRICE_SUBSCRIPTION,
-    //     {
-    //         onSubscriptionData: () => {
-    //             console.log('message revcieved')
-    //         }
-    //     }
-    // ) 
-
-
+    
     const {
         loading,
         error,
-        subscribeToMore,
         data: { getPortfolio: portfolio } = {},
+        subscribeToMore
     } = useQuery(GET_PORTFOLIO, {
         update(cache, result) {
             console.log("result");
@@ -99,13 +89,13 @@ const GET_PORTFOLIO = gql`
 `;
 
 const PRICE_SUBSCRIPTION = gql`
-    subscription newPrice {
-    newPrice {
+    subscription addPrice {
+    addPrice {
         id
         username
         valueHistory {
-        date
-        price
+            date
+            price
         }
     }
 }
