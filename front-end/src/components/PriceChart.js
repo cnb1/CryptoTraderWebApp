@@ -91,12 +91,7 @@ const GET_PORTFOLIO = gql`
 const PRICE_SUBSCRIPTION = gql`
     subscription addPrice {
     addPrice {
-        id
-        username
-        valueHistory {
-            date
-            price
-        }
+       String
     }
 }
 `;

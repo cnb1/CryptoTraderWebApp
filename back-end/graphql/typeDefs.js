@@ -56,7 +56,7 @@ type Mutation {
 }
 
 type Subscription {
-    addPrice: Portfolio
+    addPrice: String
 }
 
 `;

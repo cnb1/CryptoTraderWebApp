@@ -58,11 +58,7 @@ module.exports = {
                 then(result=> {
                     console.log('subscription trigger')
                     pubsub.publish('NEW_PRICE', {
-                        addPrice: {
-                            id: portfolio.id,
-                            username: portfolio.id,
-                            valueHistory : portfolio.valueHistory
-                        }
+                        addPrice: 'hello subscription'
                     });
                     console.log(pubsub);
                     return portfolio;
