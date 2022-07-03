@@ -46,17 +46,22 @@ const { makeExecutableSchema } = require("@graphql-tools/schema");
 const { WebSocketServer } = require("ws");
 const { useServer } = require("graphql-ws/lib/use/ws");
 const express = require("express");
-const {split} = require('@apollo/client');
-const {HttpLink} = require('@apollo/client');
+const { split, HttpLink } =require('@apollo/client');
 const { getMainDefinition } =require('@apollo/client/utilities');
 const { GraphQLWsLink } =require('@apollo/client/link/subscriptions');
 const { createClient } =require('graphql-ws');
-const { MONGODB } = require("./config.js");
 
 
 
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+const httpLink = new HttpLink({
+    uri: 'http://localhost:3005/graphql'
+  });
+  
+  const wsLink = new GraphQLWsLink(createClient({
+    url: 'ws://localhost:3005/graphql',
+  }));
+
 const app = express();
 app.set('port', 3000);
 const httpServer = createServer(app);
