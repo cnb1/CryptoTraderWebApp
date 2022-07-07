@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import gql from "graphql-tag";
 import { useQuery, useSubscription } from "@apollo/client";
+import PriceSub from './PriceSub';
 import Chart from "chart.js/auto";
 
 import { Line } from "react-chartjs-2";
 
 function PriceChart({ items: { portfolioId } }) {
     console.log(portfolioId);
-    
+
     const {
         loading,
         error,
@@ -26,8 +27,8 @@ function PriceChart({ items: { portfolioId } }) {
     subscribeToMore({
         document: PRICE_SUBSCRIPTION,
         updateQuery: (prev, { subscriptionData }) => {
- 
-            console.log('message to console');
+
+            console.log('message to console subscribe to more');
         }
     })
 
@@ -65,9 +66,11 @@ function PriceChart({ items: { portfolioId } }) {
             <>
 
                 <Line data={data} options={options} />
-                <p>
-                    subscription test
-                </p>
+
+                <h2>
+                    {portfolio.valueHistory.map(price => price.price)}
+                </h2>
+
             </>
         );
     } else {
@@ -91,7 +94,15 @@ const GET_PORTFOLIO = gql`
 const PRICE_SUBSCRIPTION = gql`
     subscription addPrice {
     addPrice {
-       String
+       id
+       username
+       strategy
+       createdAt
+       valueHistory {
+           id
+           date
+           price
+       }
     }
 }
 `;

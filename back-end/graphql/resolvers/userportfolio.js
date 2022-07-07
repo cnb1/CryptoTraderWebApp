@@ -57,10 +57,10 @@ module.exports = {
                 return portfolio.save().
                 then(result=> {
                     console.log('subscription trigger')
-                    pubsub.publish('NEW_PRICE', {
-                        addPrice: 'hello subscription'
+                    pubsub.publish('GET_PORTFOLIO', {
+                        addPrice: portfolio
                     });
-                    console.log(pubsub);
+                    // console.log(pubsub);
                     return portfolio;
                 })
                 .catch(err => {
@@ -119,7 +119,7 @@ module.exports = {
     Subscription : {
         addPrice: {
             subscribe: () => {
-                return pubsub.asyncIterator('NEW_PRICE')
+                return pubsub.asyncIterator('GET_PORTFOLIO')
             }
         }
     }

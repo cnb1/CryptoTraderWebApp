@@ -20,11 +20,11 @@ type Strategy {
 }
 type Portfolio {
     id: ID!
-    username: String!
-    strategy: String!
-    value: Int!
-    createdAt: String!
-    valueHistory: [Price]!
+    username: String
+    strategy: String
+    value: Int
+    createdAt: String
+    valueHistory: [Price]
 }
 input RegisterInput {
     username: String!
@@ -56,7 +56,7 @@ type Mutation {
 }
 
 type Subscription {
-    addPrice: String
+    addPrice: Portfolio
 }
 
 `;
