@@ -6,3 +6,10 @@ P/L
 
 
 If issues with mac working then try updating node to 18v and samw with npm
+
+There needs to be a config.js file that contains the MongoDB parameters
+
+        module.exports = {
+            MONGODB: <url>,
+            SECRET_KEY: <secret_key>
+        };

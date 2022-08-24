@@ -64,13 +64,7 @@ function PriceChart({ items: { portfolioId } }) {
 
         return (
             <>
-
                 <Line data={data} options={options} />
-
-                <h2>
-                    {portfolio.valueHistory.map(price => price.price)}
-                </h2>
-
             </>
         );
     } else {
