@@ -30,7 +30,7 @@ function UpdateStrategy({
         query: GET_PORTFOLIO,
         variables: {
           portfolioId,
-        }
+        },
       });
 
       cache.writeQuery({
@@ -43,24 +43,22 @@ function UpdateStrategy({
             id: data.getPortfolio.id,
             username: data.getPortfolio.username,
             strategy: data.getPortfolio.strategy,
-            valueHistory: data.getPortfolio.valueHistory
-          }
-        }
+            valueHistory: data.getPortfolio.valueHistory,
+          },
+        },
       });
-
     },
     variables: {
       portfolioId,
-    }
+    },
   });
-
 
   const [updateStrategy, { loadingupdate }] = useMutation(UPDATE_STRATEGY, {
     update(cache, result) {
       const data = cache.readQuery({
         query: GET_PORTFOLIO,
         variables: { portfolioId },
-        refetchInterval: 1000
+        refetchInterval: 1000,
       });
 
       cache.writeQuery({
@@ -72,7 +70,7 @@ function UpdateStrategy({
     onError(err) {
       setErrors(err);
     },
-    variables: values
+    variables: values,
   });
 
   function handleClick(strategy) {
@@ -87,7 +85,6 @@ function UpdateStrategy({
       setState(true);
     }
   }
-
 
   return (
     <>
@@ -112,9 +109,17 @@ function UpdateStrategy({
                   ))}
               </Form.Select>
             </Form.Group>
+
             <Button type="submit" disabled={state}>
               Update Strategy
             </Button>
+
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Amount to start trading</Form.Label>
+              <Form.Control placeholder="Enter amount" />
+            </Form.Group>
+            
+            <Button className="startButton">Start</Button>
           </fieldset>
         </Form>
         <br />
