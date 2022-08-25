@@ -20,6 +20,10 @@ function UpdateStrategy({
     portfolioId: portfolioId,
   });
 
+  const { onChangeMoney, onSubmitMoney, valuesMoney } = useForm(handleClickMoney, {
+    money: 0
+  });
+
   const {
     loading,
     error,
@@ -90,11 +94,12 @@ function UpdateStrategy({
     <>
       <div className="parentstrategy">
         <br></br>
-        <Form onSubmit={onSubmit}>
-          <fieldset>
-            <div className="float-container">
-              <div className="float-child">
-                <div class="shadow-lg p-3 mb-5 bg-white rounded">
+
+        <fieldset>
+          <div className="float-container">
+            <div className="float-child">
+              <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                <Form onSubmit={onSubmit}>
                   <Form.Group className="mb-3">
                     <Form.Label>Select a new strategy</Form.Label>
                     <Form.Select
@@ -117,22 +122,27 @@ function UpdateStrategy({
                   <Button type="submit" disabled={state}>
                     Update Strategy
                   </Button>
-                </div>
+                </Form>
               </div>
+            </div>
 
-              <div className="float-child">
-                <div class="shadow-lg p-3 mb-5 bg-white rounded">
+            <div className="float-child">
+              <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                <Form onSubmit={onSubmit}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Amount to start trading</Form.Label>
                     <Form.Control placeholder="Enter amount" />
                   </Form.Group>
 
-                  <Button className="startButton">Start</Button>
-                </div>
+                  <Button type="submit" className="startButton">
+                    Start
+                  </Button>
+                </Form>
               </div>
             </div>
-          </fieldset>
-        </Form>
+          </div>
+        </fieldset>
+
         <br />
         <PriceChart items={{ portfolioId }} />
       </div>
