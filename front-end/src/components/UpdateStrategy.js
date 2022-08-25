@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import { useForm } from "../util/hooks";
 import PriceChart from "./PriceChart";
 
-// import "../styles/UpdateStrategy.css";
+import "../styles/UpdateStrategy.css";
 
 function UpdateStrategy({
   items: { id, username, strategies, userportfolio },
@@ -89,37 +89,48 @@ function UpdateStrategy({
   return (
     <>
       <div className="parentstrategy">
-        <h2>Portfolio : {portfolio.strategy}</h2>
+        <br></br>
         <Form onSubmit={onSubmit}>
           <fieldset>
-            <Form.Group className="mb-3">
-              <Form.Select
-                onChange={({ target: { value } }) => callback(value)}
-              >
-                <option label="Select Strategy"></option>
-                {strategies &&
-                  strategies.map((strat) => (
-                    <option
-                      key={strat.id}
-                      name="strategy"
-                      value={strat.strategy}
+            <div className="float-container">
+              <div className="float-child">
+                <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                  <Form.Group className="mb-3">
+                    <Form.Label>Select a new strategy</Form.Label>
+                    <Form.Select
+                      onChange={({ target: { value } }) => callback(value)}
                     >
-                      {strat.strategy}
-                    </option>
-                  ))}
-              </Form.Select>
-            </Form.Group>
+                      <option label="Select Strategy"></option>
+                      {strategies &&
+                        strategies.map((strat) => (
+                          <option
+                            key={strat.id}
+                            name="strategy"
+                            value={strat.strategy}
+                          >
+                            {strat.strategy}
+                          </option>
+                        ))}
+                    </Form.Select>
+                  </Form.Group>
 
-            <Button type="submit" disabled={state}>
-              Update Strategy
-            </Button>
+                  <Button type="submit" disabled={state}>
+                    Update Strategy
+                  </Button>
+                </div>
+              </div>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Amount to start trading</Form.Label>
-              <Form.Control placeholder="Enter amount" />
-            </Form.Group>
-            
-            <Button className="startButton">Start</Button>
+              <div className="float-child">
+                <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Amount to start trading</Form.Label>
+                    <Form.Control placeholder="Enter amount" />
+                  </Form.Group>
+
+                  <Button className="startButton">Start</Button>
+                </div>
+              </div>
+            </div>
           </fieldset>
         </Form>
         <br />

@@ -10,7 +10,6 @@ function MenuBar() {
   const { user, logout } = useContext(AuthContext);
 
   const userId = user ? user.id : null;
-  var portfolioId = null
   const navigate = useNavigate();
 
   const {
@@ -23,31 +22,23 @@ function MenuBar() {
     },
     skip: userId === null,
   });
+  const portfolioId = usercurrent?.userportfolio;
 
-  if (usercurrent.userportfolio != null) {
-    portfolioId = usercurrent.userportfolio
-
-    const {
-      loading,
-      error,
-      data: { getPortfolio: portfolio } = {},
-    } = useQuery(GET_PORTFOLIO, {
-      variables: {
-        portfolioId,
-      },
-      skip: !portfolioId,
-    });
-  }
+  const {
+    loading,
+    error,
+    data: { getPortfolio: portfolio } = {},
+  } = useQuery(GET_PORTFOLIO, {
+    update(cache, result) {},
+    variables: {
+      portfolioId,
+    },
+    skip: !portfolioId,
+  });
 
   const handleClick = (e) => {
     navigate("/");
   };
-
-  console.log("user is : ", userId);
-  console.log("-----------");
-  if (usercurrent) {
-    console.log("user portfolio is ", usercurrent.userportfolio);
-  }
 
   const menuBar =
     user && usercurrent ? (
@@ -63,13 +54,19 @@ function MenuBar() {
             show all three
         */}
           {portfolio ? (
-            <Container>
-              <Navbar.Text>{portfolio.username}</Navbar.Text>
-              <Navbar.Text>{portfolio.strategy}</Navbar.Text>
-              <Navbar.Text>{portfolio.value}</Navbar.Text>
+            <Container className="userinfo">
+              <Navbar.Text>User : {portfolio.username.toUpperCase()}</Navbar.Text>
+              <br></br>
+              <Navbar.Text>Strategy : {portfolio.strategy.toUpperCase()}</Navbar.Text>
+              <br></br>
+              <Navbar.Text>Account Value : {portfolio.value}</Navbar.Text>
             </Container>
           ) : (
-            console.log("port false")
+            <Container className="userinfo">
+              <Navbar.Text>
+                No Portfolio for User : {usercurrent.username}
+              </Navbar.Text>
+            </Container>
           )}
 
           <Button className="button-logout" name="Logout" onClick={logout}>
@@ -105,11 +102,9 @@ const GET_PORTFOLIO = gql`
   query getPortfolio($portfolioId: ID!) {
     getPortfolio(portfolioId: $portfolioId) {
       id
-      valueHistory {
-        id
-        price
-        date
-      }
+      username
+      strategy
+      value
     }
   }
 `;

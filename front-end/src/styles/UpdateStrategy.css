@@ -1,4 +1,10 @@
-.parentstrategy {
-    margin-left: 25%;
-    margin-right: 25%;
+.float-container {
+    border: 3px solid #fff;
+    padding: 20px;
 }
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+}   

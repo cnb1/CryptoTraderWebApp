@@ -55,8 +55,4 @@ type Mutation {
     updateStrategy(strategy: String!, portfolioId: ID!): Portfolio!
 }
 
-type Subscription {
-    addPrice: Portfolio
-}
-
 `;

@@ -115,12 +115,5 @@ module.exports = {
                 throw Error(err);
             }
          }
-    },
-    Subscription : {
-        addPrice: {
-            subscribe: () => {
-                return pubsub.asyncIterator('GET_PORTFOLIO')
-            }
-        }
     }
 }

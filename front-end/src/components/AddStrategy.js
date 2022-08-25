@@ -11,7 +11,6 @@ function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
   const [errors, setErrors] = useState({});
   // const [statePortfolio, setState] = useState(true);
 
-  console.log("user portfolio->" + userportfolio)
 
   const navigate = useNavigate();
 

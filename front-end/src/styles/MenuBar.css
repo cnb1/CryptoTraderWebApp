@@ -5,3 +5,7 @@
 .title {
     font-size: 4em !important;
 }
+
+.userinfo {
+    text-align: right;
+}

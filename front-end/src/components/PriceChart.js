@@ -7,30 +7,18 @@ import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 
 function PriceChart({ items: { portfolioId } }) {
-    console.log(portfolioId);
 
     const {
         loading,
         error,
         data: { getPortfolio: portfolio } = {},
-        subscribeToMore
     } = useQuery(GET_PORTFOLIO, {
         update(cache, result) {
-            console.log("result");
-            console.log(result);
         },
         variables: {
             portfolioId,
         },
     });
-
-    subscribeToMore({
-        document: PRICE_SUBSCRIPTION,
-        updateQuery: (prev, { subscriptionData }) => {
-
-            console.log('message to console subscribe to more');
-        }
-    })
 
     const options = {
         responsive: true,

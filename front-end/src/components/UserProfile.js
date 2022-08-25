@@ -32,8 +32,6 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
   return (
     <>
       <div className="userProfileParent">
-        <h1>Hello : {username}</h1>
-
         {portfolio ? (
           <>
             <UpdateStrategy
