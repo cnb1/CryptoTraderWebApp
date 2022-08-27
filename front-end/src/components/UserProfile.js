@@ -3,9 +3,10 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import UpdateStrategy from "./UpdateStrategy";
 import AddStrategy from "./AddStrategy";
+import PriceChart from "./PriceChart";
 
-import '../styles/UserProfile.css';
-
+import "../styles/UserProfile.css";
+import StartTrading from "./StartTrading";
 
 function UserProfile({ user: { id, username, email, userportfolio } }) {
   const portfolioId = userportfolio;
@@ -34,14 +35,26 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
       <div className="userProfileParent">
         {portfolio ? (
           <>
-            <UpdateStrategy
-              items={{
-                id,
-                username,
-                strategies,
-                userportfolio,
-              }}
-            />
+            <div className="float-container">
+              <div className="float-child">
+                <div className="shadow-lg p-3 mb-5 bg-white rounded">
+                  <UpdateStrategy
+                    items={{
+                      id,
+                      username,
+                      strategies,
+                      userportfolio,
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="float-child">
+                <div className="shadow-lg p-3 mb-5 bg-white rounded">
+                  <StartTrading />
+                </div>
+              </div>
+            </div>
+            <PriceChart items={{ portfolioId }} />
           </>
         ) : (
           <AddStrategy

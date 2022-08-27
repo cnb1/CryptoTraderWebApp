@@ -20,10 +20,6 @@ function UpdateStrategy({
     portfolioId: portfolioId,
   });
 
-  const { onChangeMoney, onSubmitMoney, valuesMoney } = useForm(handleClickMoney, {
-    money: 0
-  });
-
   const {
     loading,
     error,
@@ -96,55 +92,33 @@ function UpdateStrategy({
         <br></br>
 
         <fieldset>
-          <div className="float-container">
-            <div className="float-child">
-              <div class="shadow-lg p-3 mb-5 bg-white rounded">
-                <Form onSubmit={onSubmit}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Select a new strategy</Form.Label>
-                    <Form.Select
-                      onChange={({ target: { value } }) => callback(value)}
-                    >
-                      <option label="Select Strategy"></option>
-                      {strategies &&
-                        strategies.map((strat) => (
-                          <option
-                            key={strat.id}
-                            name="strategy"
-                            value={strat.strategy}
-                          >
-                            {strat.strategy}
-                          </option>
-                        ))}
-                    </Form.Select>
-                  </Form.Group>
+            <Form onSubmit={onSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label>Select a new strategy</Form.Label>
+                <Form.Select
+                  onChange={({ target: { value } }) => callback(value)}
+                >
+                  <option label="Select Strategy"></option>
+                  {strategies &&
+                    strategies.map((strat) => (
+                      <option
+                        key={strat.id}
+                        name="strategy"
+                        value={strat.strategy}
+                      >
+                        {strat.strategy}
+                      </option>
+                    ))}
+                </Form.Select>
+              </Form.Group>
 
-                  <Button type="submit" disabled={state}>
-                    Update Strategy
-                  </Button>
-                </Form>
-              </div>
-            </div>
-
-            <div className="float-child">
-              <div class="shadow-lg p-3 mb-5 bg-white rounded">
-                <Form onSubmit={onSubmit}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Amount to start trading</Form.Label>
-                    <Form.Control placeholder="Enter amount" />
-                  </Form.Group>
-
-                  <Button type="submit" className="startButton">
-                    Start
-                  </Button>
-                </Form>
-              </div>
-            </div>
-          </div>
+              <Button type="submit" disabled={state}>
+                Update Strategy
+              </Button>
+            </Form>
         </fieldset>
 
         <br />
-        <PriceChart items={{ portfolioId }} />
       </div>
     </>
   );
