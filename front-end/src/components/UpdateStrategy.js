@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
-import { useQuery } from "@apollo/client";
 import { useForm } from "../util/hooks";
-import PriceChart from "./PriceChart";
 
 import "../styles/UpdateStrategy.css";
 
@@ -20,38 +18,6 @@ function UpdateStrategy({
     portfolioId: portfolioId,
   });
 
-  const {
-    loading,
-    error,
-    data: { getPortfolio: portfolio } = {},
-  } = useQuery(GET_PORTFOLIO, {
-    update(cache, result) {
-      const data = cache.readQuery({
-        query: GET_PORTFOLIO,
-        variables: {
-          portfolioId,
-        },
-      });
-
-      cache.writeQuery({
-        query: GET_PORTFOLIO,
-        variables: {
-          portfolioId,
-        },
-        data: {
-          getPortfolio: {
-            id: data.getPortfolio.id,
-            username: data.getPortfolio.username,
-            strategy: data.getPortfolio.strategy,
-            valueHistory: data.getPortfolio.valueHistory,
-          },
-        },
-      });
-    },
-    variables: {
-      portfolioId,
-    },
-  });
 
   const [updateStrategy, { loadingupdate }] = useMutation(UPDATE_STRATEGY, {
     update(cache, result) {
