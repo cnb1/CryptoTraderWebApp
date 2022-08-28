@@ -17,20 +17,18 @@ function StartTrading() {
     */
     if (state >= 1000000) {
       console.log("call start");
-      const requestOptions = {
+      fetch("http://localhost:8080/start", {
+        // Enter your IP address here
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        mode: "no-cors",
         body: JSON.stringify({
           userid: "1234",
           strategy: "ma15",
           money: 1000000,
         }),
-      };
-      fetch("http://127.0.0.1:8080/start", requestOptions)
-        .then((response) => response.json())
-        .then((data) => this.setState({ postId: data.id }));
+      });
     } else {
-        alert("amount needs to be over 1 million")
+      alert("amount needs to be over 1 million");
       console.log("dont call start");
     }
   }
