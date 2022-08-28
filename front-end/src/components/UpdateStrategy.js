@@ -89,8 +89,6 @@ function UpdateStrategy({
   return (
     <>
       <div className="parentstrategy">
-        <br></br>
-
         <fieldset>
             <Form onSubmit={onSubmit}>
               <Form.Group className="mb-3">
@@ -118,7 +116,6 @@ function UpdateStrategy({
             </Form>
         </fieldset>
 
-        <br />
       </div>
     </>
   );
