@@ -1,12 +1,28 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, FormText } from "react-bootstrap";
 import { useForm } from "../util/hooks";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/client";
 
-function StartTrading() {
+function StartTrading({ items: { id, username, userportfolio } }) {
   const [state, setState] = useState(-1);
-
+  const portfolioId = userportfolio;
+  //   console.log('user id is ', id)
+  //   console.log('portfolio is :', userportfolio)
   const { onChange, onSubmit, values } = useForm(handleClick, {
     money: 0,
+  });
+
+  const {
+    loading,
+    error,
+    data: { getPortfolio: portfolio } = {},
+  } = useQuery(GET_PORTFOLIO, {
+    update(cache, result) {},
+    variables: {
+      portfolioId,
+    },
+    skip: !portfolioId,
   });
 
   function handleClick(amount) {
@@ -16,19 +32,30 @@ function StartTrading() {
         make request to start the program
     */
     if (state >= 1000000) {
-      console.log("call start");
+      console.log("call start trading for user", id);
+      console.log(
+        "user information is strategy is : ",
+        portfolio.strategy,
+        " value is ",
+        portfolio.value
+      );
+
       fetch("http://localhost:8080/start", {
         // Enter your IP address here
         method: "POST",
         mode: "no-cors",
         body: JSON.stringify({
-          userid: "1234",
-          strategy: "ma15",
-          money: 1000000,
+          userid: id,
+          strategy: portfolio.strategy,
+          money: portfolio.value,
         }),
-      });
+      })
+      .then((response) => {
+        response.json()
+        console.log(response.json())
+      }); 
     } else {
-      alert("amount needs to be over 1 million");
+      alert("Amount needs to be over 1 million");
       console.log("dont call start");
     }
   }
@@ -67,5 +94,16 @@ function StartTrading() {
     </>
   );
 }
+
+const GET_PORTFOLIO = gql`
+  query getPortfolio($portfolioId: ID!) {
+    getPortfolio(portfolioId: $portfolioId) {
+      id
+      username
+      strategy
+      value
+    }
+  }
+`;
 
 export default StartTrading;

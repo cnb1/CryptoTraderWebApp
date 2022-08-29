@@ -50,7 +50,13 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
               </div>
               <div className="float-child">
                 <div className="shadow-lg p-3 mb-5 bg-white rounded">
-                  <StartTrading />
+                  <StartTrading
+                    items={{
+                      id,
+                      username,
+                      userportfolio,
+                    }}
+                  />
                 </div>
               </div>
             </div>
