@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, FormText } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { useForm } from "../util/hooks";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
@@ -9,13 +9,11 @@ function StartTrading({ items: { id, username, userportfolio } }) {
   const portfolioId = userportfolio;
   //   console.log('user id is ', id)
   //   console.log('portfolio is :', userportfolio)
-  const { onChange, onSubmit, values } = useForm(handleClick, {
-    money: 0,
-  });
+  const {onSubmit} = useForm(handleClick);
 
   const {
-    loading,
-    error,
+    // loading,
+    // error,
     data: { getPortfolio: portfolio } = {},
   } = useQuery(GET_PORTFOLIO, {
     update(cache, result) {},
@@ -43,6 +41,12 @@ function StartTrading({ items: { id, username, userportfolio } }) {
       fetch("http://localhost:8080/start", {
         // Enter your IP address here
         method: "POST",
+        headers: {
+            Accept: 'application/json',
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST,GET,OPTIONS,DELETE,PUT"
+        },
         mode: "no-cors",
         body: JSON.stringify({
           userid: id,
@@ -50,10 +54,10 @@ function StartTrading({ items: { id, username, userportfolio } }) {
           money: portfolio.value,
         }),
       })
-      .then((response) => {
-        response.json()
-        console.log(response.json())
-      }); 
+        .then((response) => {
+           console.log(response)
+        })
+
     } else {
       alert("Amount needs to be over 1 million");
       console.log("dont call start");
