@@ -7,8 +7,6 @@ import { useQuery } from "@apollo/client";
 function StartTrading({ items: { id, username, userportfolio } }) {
   const [state, setState] = useState(-1);
   const portfolioId = userportfolio;
-  //   console.log('user id is ', id)
-  //   console.log('portfolio is :', userportfolio)
   const { onSubmit } = useForm(handleClick);
 
   const {
@@ -16,7 +14,7 @@ function StartTrading({ items: { id, username, userportfolio } }) {
     // error,
     data: { getPortfolio: portfolio } = {},
   } = useQuery(GET_PORTFOLIO, {
-    update(cache, result) { },
+    update(cache, result) {},
     variables: {
       portfolioId,
     },
@@ -38,16 +36,9 @@ function StartTrading({ items: { id, username, userportfolio } }) {
         portfolio.value
       );
 
-      fetch("http://localhost:8080/start", {
+      var resp = fetch("http://localhost:8080/start", {
         // Enter your IP address here
         method: "POST",
-        headers: {
-          Accept: 'application/json',
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          // "Access-Control-Allow-Methods": "POST,GET,OPTIONS,DELETE,PUT"
-        },
-        // mode: "no-cors",
         body: JSON.stringify({
           userid: id,
           strategy: portfolio.strategy,
@@ -56,12 +47,15 @@ function StartTrading({ items: { id, username, userportfolio } }) {
       })
         .then(function (response) {
           const data = response.json();
+          console.log("data: ", data);
           return data;
+        })
+        .then((data) => {
+          console.log(data.message);
         })
         .catch(function (error) {
           console.log(error);
         });
-
     } else {
       alert("Amount needs to be over 1 million");
       console.log("dont call start");
