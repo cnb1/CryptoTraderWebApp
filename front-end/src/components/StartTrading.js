@@ -3,9 +3,11 @@ import { Form, Button } from "react-bootstrap";
 import { useForm } from "../util/hooks";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
+import "../styles/StartTrading.css";
+import { isInlineFragment } from "@apollo/client/utilities";
 
 function StartTrading({ items: { id, username, userportfolio } }) {
-  const [state, setState] = useState(-1);
+  const [state, setState] = useState(-1.0);
   const portfolioId = userportfolio;
   const { onSubmit } = useForm(handleClick);
 
@@ -21,33 +23,25 @@ function StartTrading({ items: { id, username, userportfolio } }) {
     skip: !portfolioId,
   });
 
-  function handleClick(amount) {
+  function handleClick() {
     console.log("handling money click");
     console.log(state);
+    console.log();
     /*  
         make request to start the program
     */
     if (state >= 1000000) {
-      console.log("call start trading for user", id);
-      console.log(
-        "user information is strategy is : ",
-        portfolio.strategy,
-        " value is ",
-        portfolio.value
-      );
-
-      var resp = fetch("http://localhost:8080/start", {
+      fetch("http://localhost:8080/start", {
         // Enter your IP address here
         method: "POST",
         body: JSON.stringify({
           userid: id,
           strategy: portfolio.strategy,
-          money: portfolio.value,
+          money: Number(state),
         }),
       })
         .then(function (response) {
           const data = response.json();
-          console.log("data: ", data);
           return data;
         })
         .then((data) => {
@@ -63,9 +57,9 @@ function StartTrading({ items: { id, username, userportfolio } }) {
   }
 
   function callback(value) {
-    let isnum = /^\d+$/.test(value);
+    if (!isNaN(parseFloat(value))) {
+      console.log("its a float: ", parseFloat(value));
 
-    if (isnum) {
       console.log("it is a number");
       if (value > 0) {
         setState(value);
@@ -76,6 +70,27 @@ function StartTrading({ items: { id, username, userportfolio } }) {
       console.log("it is not a number");
       setState(-1);
     }
+  }
+
+  function handleStop() {
+    console.log("handle the stopping");
+    fetch("http://localhost:8080/stop", {
+      // Enter your IP address here
+      method: "POST",
+      body: JSON.stringify({
+        userid: id,
+      }),
+    })
+      .then(function (response) {
+        const data = response.json();
+        return data;
+      })
+      .then((data) => {
+        console.log(data.message);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (
@@ -91,6 +106,9 @@ function StartTrading({ items: { id, username, userportfolio } }) {
 
         <Button type="submit" className="startButton">
           Start
+        </Button>
+        <Button variant="danger" onClick={handleStop} className="stopButton">
+          Stop
         </Button>
       </Form>
     </>
