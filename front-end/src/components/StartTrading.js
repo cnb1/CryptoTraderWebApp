@@ -9,14 +9,14 @@ function StartTrading({ items: { id, username, userportfolio } }) {
   const portfolioId = userportfolio;
   //   console.log('user id is ', id)
   //   console.log('portfolio is :', userportfolio)
-  const {onSubmit} = useForm(handleClick);
+  const { onSubmit } = useForm(handleClick);
 
   const {
     // loading,
     // error,
     data: { getPortfolio: portfolio } = {},
   } = useQuery(GET_PORTFOLIO, {
-    update(cache, result) {},
+    update(cache, result) { },
     variables: {
       portfolioId,
     },
@@ -42,21 +42,25 @@ function StartTrading({ items: { id, username, userportfolio } }) {
         // Enter your IP address here
         method: "POST",
         headers: {
-            Accept: 'application/json',
+          Accept: 'application/json',
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "POST,GET,OPTIONS,DELETE,PUT"
+          // "Access-Control-Allow-Methods": "POST,GET,OPTIONS,DELETE,PUT"
         },
-        mode: "no-cors",
+        // mode: "no-cors",
         body: JSON.stringify({
           userid: id,
           strategy: portfolio.strategy,
           money: portfolio.value,
         }),
       })
-        .then((response) => {
-           console.log(response)
+        .then(function (response) {
+          const data = response.json();
+          return data;
         })
+        .catch(function (error) {
+          console.log(error);
+        });
 
     } else {
       alert("Amount needs to be over 1 million");
