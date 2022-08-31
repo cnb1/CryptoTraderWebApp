@@ -35,7 +35,7 @@ function StartTrading({ items: { id, username, userportfolio } }) {
         body: JSON.stringify({
           userid: id,
           strategy: portfolio.strategy,
-          money: Number(state),
+          money: Number(state)
         }),
       })
         .then(function (response) {
@@ -63,16 +63,17 @@ function StartTrading({ items: { id, username, userportfolio } }) {
 
   function callback(value) {
     if (!isNaN(parseFloat(value))) {
-      console.log("its a float: ", parseFloat(value));
+      // console.log("its a float: ", parseFloat(value));
 
-      console.log("it is a number");
+      // console.log("it is a number");
       if (value > 0) {
+        value = parseFloat(value).toFixed(2)
         setState(value);
       } else {
         setState(-1);
       }
     } else {
-      console.log("it is not a number");
+      // console.log("it is not a number");
       setState(-1);
     }
   }

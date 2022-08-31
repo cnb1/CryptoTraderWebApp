@@ -60,7 +60,7 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
                 </div>
               </div>
             </div>
-            <PriceChart items={{ portfolioId }} />
+            <PriceChart items={{ id, portfolioId }} />
           </>
         ) : (
           <AddStrategy
