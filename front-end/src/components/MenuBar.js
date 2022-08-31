@@ -40,13 +40,19 @@ function MenuBar() {
     navigate("/");
   };
 
+  const format = (amount) => {
+    return Number(amount)
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, "$&,");
+  };
+
   const menuBar =
     user && usercurrent ? (
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Collapse className="title2">
             <Navbar.Brand href="/" onClick={handleClick} className="title">
-              Crypto Trader
+              Hunting αlpha
             </Navbar.Brand>
           </Navbar.Collapse>
 
@@ -55,11 +61,15 @@ function MenuBar() {
         */}
           {portfolio ? (
             <Container className="userinfo">
-              <Navbar.Text>User : {portfolio.username.toUpperCase()}</Navbar.Text>
+              <Navbar.Text>
+                User : {portfolio.username.toUpperCase()}
+              </Navbar.Text>
               <br></br>
-              <Navbar.Text>Strategy : {portfolio.strategy.toUpperCase()}</Navbar.Text>
+              <Navbar.Text>
+                Strategy : {portfolio.strategy.toUpperCase()}
+              </Navbar.Text>
               <br></br>
-              <Navbar.Text>Account Value : {portfolio.value}</Navbar.Text>
+              <Navbar.Text><h4 className="money">Account Value : ${format(portfolio.value)}</h4></Navbar.Text>
             </Container>
           ) : (
             <Container className="userinfo">

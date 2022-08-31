@@ -5,6 +5,7 @@ import {InMemoryCache} from '@apollo/client';
 import {createHttpLink} from '@apollo/client';
 import {ApolloProvider} from '@apollo/client';
 import {setContext} from 'apollo-link-context';
+import './App.css'
 
 
 const httplink = createHttpLink({

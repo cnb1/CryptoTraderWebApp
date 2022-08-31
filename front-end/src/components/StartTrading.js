@@ -25,11 +25,11 @@ function StartTrading({ items: { id, username, userportfolio } }) {
   function handleClick() {
     console.log("handling money click");
     console.log(state);
-    console.log();
+    console.log(portfolio.value);
     /*  
         make request to start the program
     */
-    if (state >= 1000000) {
+    if (state >= 1000000 && state<= portfolio.value) {
       fetch("http://localhost:8080/start", {
         // Enter your IP address here
         method: "POST",
@@ -50,8 +50,15 @@ function StartTrading({ items: { id, username, userportfolio } }) {
           console.log(error);
         });
     } else {
-      alert("Amount needs to be over 1 million");
-      console.log("dont call start");
+      if (state < 1000000) {
+        alert("Amount needs to be over 1 million");
+      }
+      else if (state > portfolio.value) {
+        alert("Amount needs to be less that the portfolio value")
+      }
+      else {
+        console.log("dont call start");
+      }
     }
   }
 
