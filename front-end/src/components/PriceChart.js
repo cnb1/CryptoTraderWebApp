@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Button } from 'react-bootstrap'
 import gql from "graphql-tag";
 import { useQuery, useSubscription } from "@apollo/client";
 import PriceSub from './PriceSub';
@@ -53,7 +54,7 @@ function PriceChart({ items: { portfolioId } }) {
                 }
             },
             title: {
-                fontSize:40,
+                fontSize: 40,
                 display: false,
                 text: "Balance",
                 labels: {
@@ -73,30 +74,30 @@ function PriceChart({ items: { portfolioId } }) {
             x: {
                 ticks: {
                     font: {
-                      size: 20
+                        size: 20
                     }
-                  },
-                  title: {
+                },
+                title: {
                     display: true,
                     text: 'Date',
                     font: {
-                      size: 25
+                        size: 25
                     }
-                  }
+                }
             },
             y: {
                 ticks: {
                     font: {
-                      size: 20
+                        size: 20
                     }
-                  },
-                  title: {
+                },
+                title: {
                     display: true,
                     text: 'Amount in USD',
                     font: {
-                      size: 25
+                        size: 25
                     }
-                  },
+                },
                 grid: {
                     drawBorder: false,
                     color: function (context) {
@@ -131,8 +132,15 @@ function PriceChart({ items: { portfolioId } }) {
 
         return (
             <>
+
                 <h1 className="title-name">Balance</h1>
                 <Line data={data} options={options} />
+                <br></br>
+                <div className="chart-class">
+                    <Button variant="success" className="moneyButton">
+                        Get Updated Amount
+                    </Button>{' '}
+                </div>
             </>
         );
     } else {

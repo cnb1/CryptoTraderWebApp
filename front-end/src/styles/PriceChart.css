@@ -2,3 +2,9 @@
     color: rgb(114, 114, 114);
     text-align: center;
 }
+
+.chart-class {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
