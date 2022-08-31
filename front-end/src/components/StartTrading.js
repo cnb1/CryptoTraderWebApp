@@ -4,7 +4,6 @@ import { useForm } from "../util/hooks";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import "../styles/StartTrading.css";
-import { isInlineFragment } from "@apollo/client/utilities";
 
 function StartTrading({ items: { id, username, userportfolio } }) {
   const [state, setState] = useState(-1.0);
@@ -103,8 +102,8 @@ function StartTrading({ items: { id, username, userportfolio } }) {
     <>
       <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3">
-          <Form.Label>Amount to start trading</Form.Label>
-          <Form.Control
+          <Form.Label className="formLabel">Amount to start trading</Form.Label>
+          <Form.Control id='formControl'
             onChange={({ target: { value } }) => callback(value)}
             placeholder="Enter amount"
           />

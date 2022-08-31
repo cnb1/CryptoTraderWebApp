@@ -37,7 +37,7 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
           <>
             <div className="float-container">
               <div className="float-child">
-                <div className="shadow-lg p-3 mb-5 bg-white rounded">
+                <div className="shadow-lg p-3 mb-5 bg-white rounded" id='input'>
                   <UpdateStrategy
                     items={{
                       id,
@@ -49,7 +49,7 @@ function UserProfile({ user: { id, username, email, userportfolio } }) {
                 </div>
               </div>
               <div className="float-child">
-                <div className="shadow-lg p-3 mb-5 bg-white rounded">
+                <div className="shadow-lg p-3 mb-5 bg-white rounded" id='input'>
                   <StartTrading
                     items={{
                       id,

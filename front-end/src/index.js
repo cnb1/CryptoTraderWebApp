@@ -2,6 +2,7 @@ import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import ApolloProvider from "./ApolloProvider";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import './styles/Dark.css'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(ApolloProvider);

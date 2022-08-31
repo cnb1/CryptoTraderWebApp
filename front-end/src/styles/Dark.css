@@ -1,0 +1,23 @@
+body {
+    background-color: #1a1a1a;
+}
+
+#input {
+    --box-shadow-color: #404040;
+    box-shadow: 0 1rem 1rem var(--box-shadow-color) !important;
+    background-color: #1a1a1a !important;
+}
+
+.formLabel {
+    color: white;
+}
+
+#formControl {
+    background-color: #656363 !important;
+    color: white;
+    border-color: grey;
+}
+
+.form-control::placeholder {
+    color: white;
+}

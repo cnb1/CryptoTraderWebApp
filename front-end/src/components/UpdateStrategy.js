@@ -58,8 +58,8 @@ function UpdateStrategy({
         <fieldset>
             <Form onSubmit={onSubmit}>
               <Form.Group className="mb-3">
-                <Form.Label>Select a new strategy</Form.Label>
-                <Form.Select
+                <Form.Label className="formLabel">Select a new strategy</Form.Label>
+                <Form.Select id='formControl'
                   onChange={({ target: { value } }) => callback(value)}
                 >
                   <option label="Select Strategy"></option>

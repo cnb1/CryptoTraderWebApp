@@ -29,7 +29,7 @@ function MenuBar() {
     error,
     data: { getPortfolio: portfolio } = {},
   } = useQuery(GET_PORTFOLIO, {
-    update(cache, result) {},
+    update(cache, result) { },
     variables: {
       portfolioId,
     },
@@ -52,7 +52,7 @@ function MenuBar() {
         <Container>
           <Navbar.Collapse className="title2">
             <Navbar.Brand href="/" onClick={handleClick} className="title">
-              Hunting αlpha
+              Hunting &#945;lpha
             </Navbar.Brand>
           </Navbar.Collapse>
 

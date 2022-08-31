@@ -7,11 +7,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AuthRoute from "./pages/AuthRoute";
-import './App.css'
 
 function App() {
   return (
-    <div className="main">
       <AuthProvider>
         <Router>
           <MenuBar />
@@ -28,7 +26,6 @@ function App() {
           </Routes>
         </Router>
       </AuthProvider>
-    </div>
   );
 }
 
