@@ -103,7 +103,7 @@ function StartTrading({ items: { id, username, userportfolio } }) {
       <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3">
           <Form.Label className="formLabel">Amount to start trading</Form.Label>
-          <Form.Control id='formControl'
+          <Form.Control
             onChange={({ target: { value } }) => callback(value)}
             placeholder="Enter amount"
           />

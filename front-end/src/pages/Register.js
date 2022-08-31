@@ -42,7 +42,7 @@ function Register() {
   return (
     <>
       <div className="parentlogin">
-        <div className="shadow-lg p-3 mb-5 bg-white rounded">
+        <div className="shadow-lg p-3 mb-5 bg-white rounded formLabel form-background">
           <h1>Register</h1>
 
           <Form onSubmit={onSubmit}>

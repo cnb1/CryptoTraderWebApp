@@ -88,7 +88,7 @@ function MenuBar() {
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="/" onClick={handleClick} className="title">
-            Crypto Trader
+          Hunting &#945;lpha
           </Navbar.Brand>
         </Container>
       </Navbar>

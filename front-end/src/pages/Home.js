@@ -40,7 +40,7 @@ function Home() {
     ) : (
       <>
           <div className="homediv">
-            <div className="shadow-lg p-3 mb-5 bg-white rounded">
+            <div className="shadow-lg p-3 mb-5 bg-white rounded form-background">
               <Button
                 variant="primary"
                 size="lg"

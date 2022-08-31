@@ -59,7 +59,7 @@ function UpdateStrategy({
             <Form onSubmit={onSubmit}>
               <Form.Group className="mb-3">
                 <Form.Label className="formLabel">Select a new strategy</Form.Label>
-                <Form.Select id='formControl'
+                <Form.Select
                   onChange={({ target: { value } }) => callback(value)}
                 >
                   <option label="Select Strategy"></option>
