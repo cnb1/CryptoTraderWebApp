@@ -16,7 +16,6 @@ function StartTrading({ items: { id, username, userportfolio } }) {
     // error,
     data: { getPortfolio: portfolio } = {},
   } = useQuery(GET_PORTFOLIO, {
-    update(cache, result) {},
     variables: {
       portfolioId,
     },

@@ -64,7 +64,7 @@ function MenuBar() {
           ) : (
             <Container className="userinfo">
               <Navbar.Text>
-                No Portfolio for User : {usercurrent.username}
+                No Portfolio for User : {usercurrent.username.toUpperCase()}
               </Navbar.Text>
             </Container>
           )}

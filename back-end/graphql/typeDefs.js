@@ -22,7 +22,7 @@ type Portfolio {
     id: ID!
     username: String
     strategy: String
-    value: Int
+    value: Float
     createdAt: String
     valueHistory: [Price]
 }
@@ -37,6 +37,7 @@ input PortfolioInput {
     userId: ID!
     username: String!
     strategy: String!
+    value: Float!
     userportfolio: ID
 }
 type Query {

@@ -8,9 +8,9 @@ import { useQuery } from "@apollo/client";
 
 function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
   const [state, setState] = useState(true);
+  const [stateAmount, setStateAmount] = useState(true);
+  const [stateAmountValue, setStateAmountValue] = useState(0);
   const [errors, setErrors] = useState({});
-  // const [statePortfolio, setState] = useState(true);
-
 
   const navigate = useNavigate();
 
@@ -19,11 +19,12 @@ function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
     username: username,
     strategy: "",
     userportfolio: userportfolio,
+    value: 1000000
   });
 
   const {
-    loadinguser,
-    erroruser,
+    // loadinguser,
+    // erroruser,
     data: { getUser: usercurrent } = {},
   } = useQuery(GET_USER, {
     variables: {
@@ -48,9 +49,9 @@ function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
               id: data.getUser.id,
               username: data.getUser.username,
               email: data.getUser.email,
-              userportfolio: result.data.createUserPortfolio.id
-            }
-          }
+              userportfolio: result.data.createUserPortfolio.id,
+            },
+          },
         });
 
         navigate("/");
@@ -63,12 +64,14 @@ function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
           userId: values.userId,
           username: values.username,
           strategy: values.strategy,
+          value: parseFloat(stateAmountValue)
         },
       },
     }
   );
 
   function handleClick(strategy) {
+    console.log("create u.p.")
     createUserPortfolio();
   }
 
@@ -76,31 +79,51 @@ function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
     if (value !== "") {
       console.log("setting new add strat setting");
       values.strategy = value;
-      setState(false);
+      setStateAmount(false);
     } else {
       setState(true);
     }
   }
 
+  function callbackAmount(value) {
+    if (value > 1000000) {
+      console.log(value)
+      setState(false)
+      setStateAmount(false)
+      setStateAmountValue(value)
+    }
+  }
+
   return (
-    <Form onSubmit={onSubmit}>
-      <fieldset>
-        <Form.Group className="mb-3">
-          <Form.Select onChange={({ target: { value } }) => callback(value)}>
-            <option label="Select Strategy"></option>
-            {strategies &&
-              strategies.map((strat) => (
-                <option key={strat.id} name="strategy" value={strat.strategy}>
-                  {strat.strategy}
-                </option>
-              ))}
-          </Form.Select>
-        </Form.Group>
-        <Button type="submit" disabled={state}>
-          Add Strategy
-        </Button>
-      </fieldset>
-    </Form>
+    <>
+      <br></br>
+      <Form onSubmit={onSubmit}>
+        <fieldset>
+          <Form.Group className="mb-3">
+            <Form.Select onChange={({ target: { value } }) => callback(value)}>
+              <option label="Select Strategy"></option>
+              {strategies &&
+                strategies.map((strat) => (
+                  <option key={strat.id} name="strategy" value={strat.strategy}>
+                    {strat.strategy}
+                  </option>
+                ))}
+            </Form.Select>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Amount to Trade</Form.Label>
+            <Form.Control disabled={stateAmount}
+              onChange={({ target: { value } }) => callbackAmount(value)}
+              placeholder="Enter amount to trade above 1 million or 1 million will be set"
+            />
+          </Form.Group>
+          <Button type="submit" disabled={state || stateAmount}>
+            Add Strategy
+          </Button>
+        </fieldset>
+      </Form>
+    </>
   );
 }
 
