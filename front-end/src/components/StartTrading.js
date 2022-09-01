@@ -29,7 +29,7 @@ function StartTrading({ items: { id, username, userportfolio } }) {
         make request to start the program
     */
     if (state >= 1000000 && state<= portfolio.value) {
-      fetch("http://localhost:8080/start", {
+      var data = fetch("http://localhost:8080/start", {
         // Enter your IP address here
         method: "POST",
         body: JSON.stringify({
@@ -43,11 +43,16 @@ function StartTrading({ items: { id, username, userportfolio } }) {
           return data;
         })
         .then((data) => {
-          console.log(data.message);
+          console.log(data.message.success)
         })
         .catch(function (error) {
           console.log(error);
         });
+
+        if (data.message.success) {
+          
+        }
+
     } else {
       if (state < 1000000) {
         alert("Amount needs to be over 1 million");
