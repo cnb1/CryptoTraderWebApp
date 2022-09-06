@@ -5,8 +5,8 @@
     list-style-type: none; 
     padding: 0px; 
     margin: 0px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 45%;
+    margin-right: 55%;
 }
 
 .chart-class {
@@ -17,4 +17,5 @@
 
 .title-div {
     display: block;
+    align-content: center;
 }

@@ -21,7 +21,7 @@ function StartTrading({ items: { id, username, userportfolio } }) {
     skip: !portfolioId,
   });
 
-  function handleClick() {
+  async function handleClick() {
     console.log("handling money click");
     console.log(state);
     console.log(portfolio.value);
@@ -29,7 +29,7 @@ function StartTrading({ items: { id, username, userportfolio } }) {
         make request to start the program
     */
     if (state >= 1000000 && state<= portfolio.value) {
-      var data = fetch("http://localhost:8080/start", {
+      var data = await fetch("http://localhost:8080/start", {
         // Enter your IP address here
         method: "POST",
         body: JSON.stringify({
@@ -43,14 +43,24 @@ function StartTrading({ items: { id, username, userportfolio } }) {
           return data;
         })
         .then((data) => {
-          console.log(data.message.success)
+          console.log("Printing the messages returning")
+          console.log(data)
+          console.log(data.success)
+          return data
         })
         .catch(function (error) {
           console.log(error);
         });
 
-        if (data.message.success) {
-          
+        if (data.success) {
+          console.log("successful adding")
+          var message = "User " + username + " was added"
+          alert(message)
+        }
+        else {
+          console.log("not successful")
+          var message = "User " + username + " is already trading"
+          alert(message)
         }
 
     } else {
