@@ -21,7 +21,7 @@ function PriceChart({ items: { id, portfolioId } }) {
   });
 
   function handleClick() {
-    console.log(id)
+    console.log(id);
     console.log("get the current price");
     fetch("http://localhost:8080/money", {
       // Enter your IP address here
@@ -40,7 +40,6 @@ function PriceChart({ items: { id, portfolioId } }) {
       .catch(function (error) {
         console.log(error);
       });
-    
   }
 
   const CHART_COLORS = {
@@ -148,7 +147,9 @@ function PriceChart({ items: { id, portfolioId } }) {
 
     return (
       <>
-        <h1 className="title-name">Balance</h1>
+        <div className="title-div">
+          <h1 className="title-name">Balance</h1>
+        </div>
         <Line data={data} options={options} />
         <br></br>
         <div className="chart-class">

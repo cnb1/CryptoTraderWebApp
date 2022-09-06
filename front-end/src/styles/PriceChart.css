@@ -1,10 +1,20 @@
 .title-name {
     color: rgb(114, 114, 114);
     text-align: center;
+    display: inline;
+    list-style-type: none; 
+    padding: 0px; 
+    margin: 0px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .chart-class {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.title-div {
+    display: block;
 }
