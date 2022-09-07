@@ -43,6 +43,7 @@ function PriceChart({ items: { id, portfolioId } }) {
       method: "POST",
       body: JSON.stringify({
         userid: id,
+        portfolioId: portfolioId
       }),
     })
       .then(function (response) {
