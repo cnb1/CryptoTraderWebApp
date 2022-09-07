@@ -8,12 +8,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AuthRoute from "./pages/AuthRoute";
 
-import { Provider } from "react-redux";
-import store from "./redux/store";
+// import { Provider } from "react-redux";
+// import store from "./redux/store";
 
 function App() {
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
       <AuthProvider>
         <Router>
           <MenuBar />
@@ -30,7 +30,7 @@ function App() {
           </Routes>
         </Router>
       </AuthProvider>
-    </Provider>
+    // </Provider>
   );
 }
 

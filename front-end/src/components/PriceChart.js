@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import gql from "graphql-tag";
-import { useQuery, useSubscription } from "@apollo/client";
+import { useLazyQuery, useQuery, useSubscription } from "@apollo/client";
 import PriceSub from "./PriceSub";
 import Chart from "chart.js/auto";
 import "../styles/PriceChart.css";
@@ -9,12 +9,27 @@ import "../styles/PriceChart.css";
 import { Line } from "react-chartjs-2";
 
 function PriceChart({ items: { id, portfolioId } }) {
+
+
   const {
     loading,
     error,
     data: { getPortfolio: portfolio } = {},
+    refetch
   } = useQuery(GET_PORTFOLIO, {
-    update(cache, result) {},
+    update(cache, result) {
+      const data = cache.readQuery({
+        query: GET_PORTFOLIO,
+        variables: { portfolioId },
+        refetchInterval: 1000,
+      });
+
+      cache.writeQuery({
+        query: GET_PORTFOLIO,
+        variables: { portfolioId },
+        data,
+      });
+    },
     variables: {
       portfolioId,
     },
@@ -36,6 +51,10 @@ function PriceChart({ items: { id, portfolioId } }) {
       })
       .then((data) => {
         console.log(data.message);
+        console.log("Calling the query again")
+        // getPrices()
+        refetch()
+        console.log(portfolio)
       })
       .catch(function (error) {
         console.log(error);

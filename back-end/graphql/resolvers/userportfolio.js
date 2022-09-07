@@ -23,7 +23,7 @@ module.exports = {
         value,
         createdAt: new Date().toISOString(),
         valueHistory: {
-          price: 0.0,
+          price: value,
           date: new Date().toISOString(),
         },
       });

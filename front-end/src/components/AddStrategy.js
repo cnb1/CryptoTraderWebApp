@@ -100,6 +100,7 @@ function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
       <Form onSubmit={onSubmit}>
         <fieldset>
           <Form.Group className="mb-3">
+          <Form.Label className="amountToTrade">Select Strategy</Form.Label>
             <Form.Select onChange={({ target: { value } }) => callback(value)}>
               <option label="Select Strategy"></option>
               {strategies &&
@@ -112,7 +113,7 @@ function AddStrategy({ items: { id, username, strategies, userportfolio } }) {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Amount to Trade</Form.Label>
+            <Form.Label className="amountToTrade">Amount to Trade</Form.Label>
             <Form.Control disabled={stateAmount}
               onChange={({ target: { value } }) => callbackAmount(value)}
               placeholder="Enter amount to trade above 1 million or 1 million will be set"
