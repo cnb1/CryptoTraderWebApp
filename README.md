@@ -10,3 +10,10 @@ There needs to be a config.js file that contains the MongoDB parameters
             MONGODB: <url>,
             SECRET_KEY: <secret_key>
         };
+
+```mermaid
+graph TD;
+    Client-->GraphQL_Server;
+    GraphQL_Server-->MongoDB;
+    Client-->AlgoTrader;
+```
